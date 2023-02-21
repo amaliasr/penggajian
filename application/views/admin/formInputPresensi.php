@@ -1,98 +1,221 @@
 <div class="container-fluid">
 
-<!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"><?php echo $title ?></h1>
-</div>
-
-<div class="card mb-3">
-    <div class="card-header bg-primary text-white">
-        Input Presensi Pegawai
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"><?php echo $title ?></h1>
     </div>
 
-    <div class="card-body">
-        <form class="form-inline">
-            <div class="form-group mb-2">
-                <label for="statisticEmail2">Bulan: </label>
-                <select class="form-control ml-3" name="bulan">
-                    <option value="">--Pilih Bulan--</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                </select> 
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+            Input Presensi Pegawai
+        </div>
+        <?php
+        if ((isset($_GET['bulan']) && $_GET['bulan'] != '') && (isset($_GET['tahun']) && $_GET['tahun'] != '')) {
+            $bulan = $_GET['bulan'];
+            $tahun = $_GET['tahun'];
+            $bulantahun = $bulan . $tahun;
+        } else {
+            $bulan = date('m');
+            $tahun = date('Y');
+            $bulantahun = $bulan . $tahun;
+        }
+        ?>
+        <div class="card-body">
+            <div class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="statisticEmail2">Bulan: </label>
+                    <select class="form-control ml-3" name="bulan" id="bulan">
+                        <option value="">--Pilih Bulan--</option>
+                        <option value="01" <?php if ($bulan == '01') {
+                                                echo 'selected';
+                                            } ?>>Januari</option>
+                        <option value="02" <?php if ($bulan == '02') {
+                                                echo 'selected';
+                                            } ?>>Februari</option>
+                        <option value="03" <?php if ($bulan == '03') {
+                                                echo 'selected';
+                                            } ?>>Maret</option>
+                        <option value="04" <?php if ($bulan == '04') {
+                                                echo 'selected';
+                                            } ?>>April</option>
+                        <option value="05" <?php if ($bulan == '05') {
+                                                echo 'selected';
+                                            } ?>>Mei</option>
+                        <option value="06" <?php if ($bulan == '06') {
+                                                echo 'selected';
+                                            } ?>>Juni</option>
+                        <option value="07" <?php if ($bulan == '07') {
+                                                echo 'selected';
+                                            } ?>>Juli</option>
+                        <option value="08" <?php if ($bulan == '08') {
+                                                echo 'selected';
+                                            } ?>>Agustus</option>
+                        <option value="09" <?php if ($bulan == '09') {
+                                                echo 'selected';
+                                            } ?>>September</option>
+                        <option value="10" <?php if ($bulan == '10') {
+                                                echo 'selected';
+                                            } ?>>Oktober</option>
+                        <option value="11" <?php if ($bulan == '11') {
+                                                echo 'selected';
+                                            } ?>>November</option>
+                        <option value="12" <?php if ($bulan == '12') {
+                                                echo 'selected';
+                                            } ?>>Desember</option>
+                    </select>
+                </div>
+
+                <div class="form-inline">
+                    <div class="form-group mb-2 ml-5">
+                        <label for="statisticEmail2">Tahun: </label>
+                        <select class="form-control ml-3" name="tahun" id="tahun">
+                            <option value="">--Pilih Tahun--</option>
+                            <?php $tahun = date('Y');
+                            for ($i = 2022; $i < $tahun + 5; $i++) { ?>
+                                <option value="<?php echo $i ?>" <?php if ($tahun == $i) {
+                                                                        echo 'selected';
+                                                                    } ?>><?php echo $i ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary mb-2 ml-auto" onclick="getData()"><i class="fas fa-eye"></i>Generate Form</button>
             </div>
 
-        <form class="form-inline">
-            <div class="form-group mb-2 ml-5">
-                <label for="statisticEmail2">Tahun: </label>
-                <select class="form-control ml-3" name="tahun">
-                    <option value="">--Pilih Tahun--</option>
-                    <?php $tahun = date('Y');
-                    for($i=2022;$i<$tahun+5;$i++) {?>
-                    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                <?php } ?>
-                </select> 
-            </div>
-             <button type="submit" class="btn btn-primary mb-2 ml-auto"><i class="fas fa-eye"></i>Generate Form</button>   
-        </form>
+
+        </div>
+
+        <div class="alert alert-info">Menampilkan Data Kehadiran Pegawai Bulan: <span class="font-weight-bold" id="tampilBulan"><?php echo $bulan ?></span> Tahun: <span class="font-weight-bold" id="tampilTahun"><?php echo $tahun ?></span></div>
+        <div class="container p-3" id="formTable">
+
+        </div>
+
+
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            getData()
+        })
+        var dataForTable = ''
+        var bulan = ''
+        var tahun = ''
 
-<?php 
-    if((isset($_GET['bulan']) && $_GET['bulan']!='') && (isset($_GET['tahun'])&& $_GET['tahun']!='')){
-        $bulan = $_GET['bulan'];
-        $tahun = $_GET['tahun'];
-        $bulantahun = $bulan.$tahun;
-    }else{
-        $bulan = date('m');
-        $tahun = date('Y');
-        $bulantahun = $bulan.$tahun;
-    }
-?>
-</div>
+        function getData() {
+            bulan = $('#bulan').val()
+            tahun = $('#tahun').val()
+            $('#tampilBulan').html(bulan)
+            $('#tampilTahun').html(tahun)
+            $.ajax({
+                url: '<?php echo base_url(); ?>admin/dataPresensi/listPresensi',
+                type: 'POST',
+                data: {
+                    bulantahun: bulan + tahun,
+                },
+                beforeSend: function() {},
+                success: function(response) {
+                    var data = JSON.parse(response)
+                    if (data.length == 0) {
+                        generateNewForm()
+                    } else {
+                        dataForTable = data
+                        form()
+                    }
+                }
+            })
+        }
 
-<div class="alert alert-info">Menampilkan Data Kehadiran Pegawai Bulan: <span class="font-weight-bold"><?php echo $bulan ?></span> Tahun: <span class="font-weight-bold"><?php echo $tahun ?></span></div>
+        function generateNewForm() {
+            $.ajax({
+                url: '<?php echo base_url(); ?>admin/dataPresensi/newListPresensi',
+                type: 'GET',
+                beforeSend: function() {},
+                success: function(response) {
+                    var data = JSON.parse(response)
+                    console.log(data)
+                    dataForTable = data
+                    form()
+                }
+            })
 
-<form method="POST">
-<button class="btn btn-success mb-3" type="submit" name="submit" value="submit">Simpan</button>
-<table class="table table-bordered table-striped">
-    <tr>
-        <td class="text-center">No</td>
-        <td class="text-center">NIP</td>
-        <td class="text-center">Nama Pegawai</td>
-        <td class="text-center" width="8%">Hadir</td>
-        <td class="text-center" width="8%">Izin</td>
-        <td class="text-center" width="8%">Sakit</td>
-        <td class="text-center" width="8%">Alpha</td>
-    </tr>
+        }
 
-    <?php $no=1; foreach($input_presensi as $a) : ?>
-        <tr>
-            <input type="hidden" name="bulan[]" class="form-control" value="<?php echo $bulantahun?>">
-            <input type="hidden" name="nik[]" class="form-control" value="<?php echo $a->nip?>">
-            <td><?php echo $no++ ?></td>
-            <td><?php echo $a->nip ?></td>
-            <td><?php echo $a->nama_pegawai ?></td>
-            <td><input type="number" name="hadir[]" class="form-control" min="0" max="25" value="0"></td>
-            <td><input type="number" name="izin[]" class="form-control" min="0" max="25" value="0"></td>
-            <td><input type="number" name="sakit[]" class="form-control" min="0" max="25" value="0"></td>
-            <td><input type="number" name="alpha[]" class="form-control" min="0" max="25" value="0"></td>
-        </tr>     
-    <?php endforeach; ?>
-</table>
-</form>
+        function form() {
+            var html = ""
+            html += '<table class="table table-bordered table-striped">'
+            html += '<tr>'
+            html += '<th class="text-center">No</th>'
+            html += '<th class="text-center">NIP</th>'
+            html += '<th class="text-center">Nama Pegawai</th>'
+            html += '<th class="text-center" width="10%">Hadir</th>'
+            html += '<th class="text-center" width="10%">Izin</th>'
+            html += '<th class="text-center" width="10%">Sakit</th>'
+            html += '<th class="text-center" width="10%">Alpha</th>'
+            html += '</tr>'
+            $.each(dataForTable, function(key, value) {
+                html += '<tr>'
+                html += '<td>' + (parseInt(key) + 1) + '</td>'
+                html += '<td>' + value['nip'] + '</td>'
+                html += '<td>' + value['nama_pegawai'] + '</td>'
+                html += '<td><input type="number" class="form-control hadir" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['hadir'] + '"></td>'
+                html += '<td><input type="number" class="form-control izin" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['izin'] + '"></td>'
+                html += '<td><input type="number" class="form-control sakit" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['sakit'] + '"></td>'
+                html += '<td><input type="number" class="form-control alpha" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['alpha'] + '"></td>'
+                html += '</tr>'
+            })
+            html += '</table>'
+            html += '<button class="btn btn-sm btn-success float-right" onclick="simpan()">Simpan</button>'
+            $('#formTable').html(html)
+        }
 
-
-</div>
-
-
-
-
+        function simpan() {
+            var hadir = $('.hadir').map(function() {
+                return $(this).val();
+            }).get();
+            var izin = $('.izin').map(function() {
+                return $(this).val();
+            }).get();
+            var sakit = $('.sakit').map(function() {
+                return $(this).val();
+            }).get();
+            var alpha = $('.alpha').map(function() {
+                return $(this).val();
+            }).get();
+            var id_kehadiran = $('.alpha').map(function() {
+                return $(this).data('id');
+            }).get();
+            var nip = $('.alpha').map(function() {
+                return $(this).data('nip');
+            }).get();
+            var data = []
+            for (let i = 0; i < id_kehadiran.length; i++) {
+                data.push({
+                    hadir: hadir[i],
+                    izin: izin[i],
+                    sakit: sakit[i],
+                    alpha: alpha[i],
+                    id_kehadiran: id_kehadiran[i],
+                    nip: nip[i],
+                    bulan: bulan + tahun
+                })
+            }
+            var datas = {
+                data: data
+            }
+            console.log(data)
+            $.ajax({
+                url: '<?php echo base_url(); ?>admin/dataPresensi/insertPresensi',
+                type: 'POST',
+                data: datas,
+                beforeSend: function() {},
+                success: function(response) {
+                    if (JSON.parse(response).status == 'success') {
+                        alert('Berhasil Input')
+                    } else {
+                        alert('Gagal Input')
+                    }
+                    getData()
+                }
+            })
+        }
+    </script>
