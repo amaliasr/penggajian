@@ -92,17 +92,17 @@ class DataPresensi extends CI_Controller
     public function listPresensi()
     {
         $bulantahun = $this->input->post('bulantahun');
-        $data = $this->db->query("SELECT data_kehadiran.*,data_pegawai.nama_pegawai, data_pegawai.jenis_kelamin, data_pegawai.id_jabatan 
+        $data = $this->db->query("SELECT data_kehadiran.*,data_pegawai.nama_pegawai, data_pegawai.jenis_kelamin, data_kehadiran.id_jabatan 
         FROM data_kehadiran 
         INNER JOIN data_pegawai ON data_kehadiran.nip=data_pegawai.nip
-        INNER JOIN data_jabatan ON data_pegawai.id_jabatan = data_jabatan.id_jabatan
+        LEFT JOIN data_jabatan ON data_kehadiran.id_jabatan = data_jabatan.id_jabatan
         WHERE data_kehadiran.bulan='$bulantahun'
         ORDER BY data_pegawai.nama_pegawai ASC")->result();
         echo json_encode($data);
     }
     public function newListPresensi()
     {
-        $data = $this->db->query("SELECT a.nip, a.nama_pegawai FROM data_pegawai a ORDER BY a.nama_pegawai ASC;")->result();
+        $data = $this->db->query("SELECT a.nip, a.nama_pegawai,a.id_jabatan FROM data_pegawai a ORDER BY a.nama_pegawai ASC;")->result();
         echo json_encode($data);
     }
     public function insertPresensi()
@@ -119,6 +119,7 @@ class DataPresensi extends CI_Controller
                     'alpha' =>  $value['alpha'],
                     'nip' =>  $value['nip'],
                     'bulan' =>  $value['bulan'],
+                    'id_jabatan' =>  $value['id_jabatan'],
                 );
                 $this->penggajianModel->insert_data($dataInsert, 'data_kehadiran');
             }

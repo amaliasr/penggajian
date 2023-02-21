@@ -38,11 +38,14 @@ class KelolaCuti extends CI_Controller
             c.nama_pegawai as nama_atasan,
             a.tanggal_pengajuan,
             a.tgl_mulai_cuti,
-            a.tgl_akhir_cuti
+            a.tgl_akhir_cuti,
+            e.nama_jabatan
         FROM data_cuti a
         JOIN data_pegawai b ON a.nip = b.nip 
         JOIN data_pegawai c ON a.nip_atasan = c.nip
-        JOIN cuti d ON a.id_cuti = d.id;")->result();
+        JOIN data_jabatan e ON a.id_jabatan = e.id_jabatan
+        JOIN cuti d ON a.id_cuti = d.id
+        ORDER BY a.id DESC;")->result();
         echo json_encode($data);
     }
     public function approvalCuti()

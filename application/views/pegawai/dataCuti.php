@@ -70,6 +70,7 @@
                         <th>#</th>
                         <th>NIP</th>
                         <th>Nama Pegawai</th>
+                        <th>Jabatan</th>
                         <th>Jenis Cuti</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Tanggal Mulai Cuti</th>
@@ -137,6 +138,7 @@
             html += '<td>' + (parseInt(key) + 1) + '</td>'
             html += '<td>' + value.nip + '</td>'
             html += '<td>' + value.nama_pegawai + '</td>'
+            html += '<td>' + value.nama_jabatan + '</td>'
             html += '<td>' + value.nama_cuti + '</td>'
             html += '<td>' + value.tanggal_pengajuan + '</td>'
             html += '<td>' + value.tgl_mulai_cuti + '</td>'

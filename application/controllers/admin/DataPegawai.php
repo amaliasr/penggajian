@@ -212,4 +212,3 @@
                 redirect('admin/dataPegawai');
         }
     }
-?>

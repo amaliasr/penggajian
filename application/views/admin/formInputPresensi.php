@@ -157,10 +157,10 @@
                 html += '<td>' + (parseInt(key) + 1) + '</td>'
                 html += '<td>' + value['nip'] + '</td>'
                 html += '<td>' + value['nama_pegawai'] + '</td>'
-                html += '<td><input type="number" class="form-control hadir" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['hadir'] + '"></td>'
-                html += '<td><input type="number" class="form-control izin" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['izin'] + '"></td>'
-                html += '<td><input type="number" class="form-control sakit" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['sakit'] + '"></td>'
-                html += '<td><input type="number" class="form-control alpha" min="0" max="25" data-nip="' + value['nip'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['alpha'] + '"></td>'
+                html += '<td><input type="number" class="form-control hadir" min="0" max="25" data-nip="' + value['nip'] + '" data-jabatan="' + value['id_jabatan'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['hadir'] + '"></td>'
+                html += '<td><input type="number" class="form-control izin" min="0" max="25" data-nip="' + value['nip'] + '" data-jabatan="' + value['id_jabatan'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['izin'] + '"></td>'
+                html += '<td><input type="number" class="form-control sakit" min="0" max="25" data-nip="' + value['nip'] + '" data-jabatan="' + value['id_jabatan'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['sakit'] + '"></td>'
+                html += '<td><input type="number" class="form-control alpha" min="0" max="25" data-nip="' + value['nip'] + '" data-jabatan="' + value['id_jabatan'] + '" data-id="' + value['id_kehadiran'] + '" value="' + value['alpha'] + '"></td>'
                 html += '</tr>'
             })
             html += '</table>'
@@ -184,6 +184,9 @@
             var id_kehadiran = $('.alpha').map(function() {
                 return $(this).data('id');
             }).get();
+            var id_jabatan = $('.alpha').map(function() {
+                return $(this).data('jabatan');
+            }).get();
             var nip = $('.alpha').map(function() {
                 return $(this).data('nip');
             }).get();
@@ -196,6 +199,7 @@
                     alpha: alpha[i],
                     id_kehadiran: id_kehadiran[i],
                     nip: nip[i],
+                    id_jabatan: id_jabatan[i],
                     bulan: bulan + tahun
                 })
             }

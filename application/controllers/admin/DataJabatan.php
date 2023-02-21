@@ -122,4 +122,3 @@
             redirect('admin/dataJabatan');
     }
 }
-?>

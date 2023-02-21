@@ -34,7 +34,7 @@ class DataPenggajian extends CI_Controller
                 data_jabatan.transport, data_jabatan.uang_makan,
                 data_kehadiran.alpha FROM data_pegawai
                 INNER JOIN data_kehadiran ON data_kehadiran.nip=data_pegawai.nip
-                INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_pegawai.id_jabatan
+                INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_kehadiran.id_jabatan
                 WHERE data_kehadiran.bulan='$bulantahun'
                 ORDER BY data_pegawai.nama_pegawai ASC")->result();
         $data['potongan_cuti'] = $this->db->query("SELECT
@@ -55,7 +55,7 @@ class DataPenggajian extends CI_Controller
                                                 JOIN data_pegawai b ON a.nip = b.nip
                                                 JOIN cuti c ON a.id_cuti = c.id
                                                 JOIN relation_cuti_potongan d ON d.id_cuti = c.id
-                                                JOIN data_jabatan e ON e.id_jabatan = b.id_jabatan
+                                                JOIN data_jabatan e ON e.id_jabatan = a.id_jabatan
                                                 WHERE a.status_approval = 'SUCCESS'
                                                 AND (DATE_FORMAT(a.tgl_mulai_cuti,'%m%Y') = $bulantahun OR DATE_FORMAT(a.tgl_akhir_cuti,'%m%Y') = $bulantahun);
                                                                 ")->result();
@@ -85,9 +85,31 @@ class DataPenggajian extends CI_Controller
                 data_jabatan.transport, data_jabatan.uang_makan,
                 data_kehadiran.alpha FROM data_pegawai
                 INNER JOIN data_kehadiran ON data_kehadiran.nip=data_pegawai.nip
-                INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_pegawai.id_jabatan
+                INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_kehadiran.id_jabatan
                 WHERE data_kehadiran.bulan='$bulantahun'
                 ORDER BY data_pegawai.nama_pegawai ASC")->result();
+        $data['potongan_cuti'] = $this->db->query("SELECT
+                a.nip,
+                b.nama_pegawai,
+                c.nama_cuti,
+                a.jumlah_hari,
+                a.tanggal_pengajuan,
+                a.tgl_mulai_cuti,
+                a.tgl_akhir_cuti,
+                d.col_jabatan,
+                e.gaji_pokok,
+                e.transport,
+                e.uang_makan,                                       
+                DATE_FORMAT(a.tgl_mulai_cuti,'%m%Y') as kode_mulai,
+                DATE_FORMAT(a.tgl_akhir_cuti,'%m%Y') as kode_akhir
+            FROM data_cuti a
+            JOIN data_pegawai b ON a.nip = b.nip
+            JOIN cuti c ON a.id_cuti = c.id
+            JOIN relation_cuti_potongan d ON d.id_cuti = c.id
+            JOIN data_jabatan e ON e.id_jabatan = a.id_jabatan
+            WHERE a.status_approval = 'SUCCESS'
+            AND (DATE_FORMAT(a.tgl_mulai_cuti,'%m%Y') = $bulantahun OR DATE_FORMAT(a.tgl_akhir_cuti,'%m%Y') = $bulantahun);
+                            ")->result();
         $this->load->view('templates_admin/header', $data);
         $this->load->view('admin/cetakDataGaji', $data);
     }

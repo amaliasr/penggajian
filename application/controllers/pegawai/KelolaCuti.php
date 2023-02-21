@@ -39,11 +39,13 @@ class KelolaCuti extends CI_Controller
             c.nama_pegawai as nama_atasan,
             a.tanggal_pengajuan,
             a.tgl_mulai_cuti,
-            a.tgl_akhir_cuti
+            a.tgl_akhir_cuti,
+            e.nama_jabatan
         FROM data_cuti a
         JOIN data_pegawai b ON a.nip = b.nip 
         JOIN data_pegawai c ON a.nip_atasan = c.nip
         JOIN cuti d ON a.id_cuti = d.id
+        JOIN data_jabatan e ON a.id_jabatan = e.id_jabatan
         WHERE a.nip = '$nip'
         ORDER BY a.id DESC")->result();
         echo json_encode($data);
@@ -51,6 +53,7 @@ class KelolaCuti extends CI_Controller
     public function insertCuti()
     {
         $this->db->trans_start();
+        $id_jabatan = $this->session->userdata('id_jabatan');
         $data = array(
             'nip' => $this->input->post('nip'),
             'id_cuti' => $this->input->post('id_cuti'),
@@ -60,6 +63,7 @@ class KelolaCuti extends CI_Controller
             'tanggal_pengajuan' => $this->input->post('tanggal_pengajuan'),
             'tgl_mulai_cuti' => $this->input->post('tgl_mulai_cuti'),
             'tgl_akhir_cuti' => $this->input->post('tgl_akhir_cuti'),
+            'id_jabatan' => $id_jabatan,
         );
         $this->penggajianModel->insert_data($data, 'data_cuti');
         $this->db->trans_complete();
