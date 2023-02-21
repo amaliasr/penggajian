@@ -34,7 +34,12 @@
                     $total_day_in_month = cal_days_in_month(CAL_GREGORIAN, substr($g->bulan, 0, 2), substr($g->bulan, 2));
                     $jumlah_potongan_cuti = 0;
                     foreach ($potongan_cuti as $key => $value) {
-                        if ($value->nip == $g->nip) {
+                        // cek
+                        $ada = 'tidak';
+                        if ($value->kode_mulai == $g->bulan || $value->kode_akhir == $g->bulan) {
+                            $ada = 'ya';
+                        }
+                        if ($value->nip == $g->nip && $ada == 'ya') {
                             $jumlah_hari_cuti = 0;
                             if ($value->kode_mulai != $g->bulan || $value->kode_akhir != $g->bulan) {
                                 $date = new DateTime($value->tgl_mulai_cuti);
@@ -45,7 +50,7 @@
                                 $diff = date_diff($tgl1, $tgl2);
                                 $jumlah_hari_cuti = $diff->format("%d%") + 1;
                             } else {
-                                $jumlah_hari_cuti = $value->jumlah_hari + $jumlah_hari_cuti;
+                                $jumlah_hari_cuti = $value->jumlah_hari;
                             }
                             $pot =  (eval('return $value->' . $value->col_jabatan . ';') / $total_day_in_month) * $jumlah_hari_cuti;
                             $jumlah_potongan_cuti = $jumlah_potongan_cuti + $pot;

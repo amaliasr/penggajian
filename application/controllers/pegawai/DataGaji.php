@@ -28,28 +28,7 @@ class DataGaji extends CI_Controller
                 INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_kehadiran.id_jabatan
                 WHERE data_kehadiran.nip='$nip'
                 ORDER BY data_kehadiran.bulan DESC")->result();
-        $data['potongan_cuti'] = $this->db->query("SELECT
-                a.nip,
-                b.nama_pegawai,
-                c.nama_cuti,
-                a.jumlah_hari,
-                a.tanggal_pengajuan,
-                a.tgl_mulai_cuti,
-                a.tgl_akhir_cuti,
-                d.col_jabatan,
-                e.gaji_pokok,
-                e.transport,
-                e.uang_makan,                                       
-                DATE_FORMAT(a.tgl_mulai_cuti,'%m%Y') as kode_mulai,
-                DATE_FORMAT(a.tgl_akhir_cuti,'%m%Y') as kode_akhir
-            FROM data_cuti a
-            JOIN data_pegawai b ON a.nip = b.nip
-            JOIN cuti c ON a.id_cuti = c.id
-            JOIN relation_cuti_potongan d ON d.id_cuti = c.id
-            JOIN data_jabatan e ON e.id_jabatan = a.id_jabatan
-            WHERE a.status_approval = 'SUCCESS'
-            AND a.nip = $nip;
-                            ")->result();
+        $data['potongan_cuti'] = $this->penggajianModel->potonganCutiById($nip);
         $this->load->view('templates_pegawai/header', $data);
         $this->load->view('templates_pegawai/sidebar');
         $this->load->view('pegawai/dataGaji', $data);
@@ -68,28 +47,7 @@ class DataGaji extends CI_Controller
             INNER JOIN data_kehadiran ON data_kehadiran.nip=data_pegawai.nip
             INNER JOIN data_jabatan ON data_jabatan.id_jabatan=data_kehadiran.id_jabatan
             WHERE data_kehadiran.id_kehadiran='$id'")->result();
-        $data['potongan_cuti'] = $this->db->query("SELECT
-            a.nip,
-            b.nama_pegawai,
-            c.nama_cuti,
-            a.jumlah_hari,
-            a.tanggal_pengajuan,
-            a.tgl_mulai_cuti,
-            a.tgl_akhir_cuti,
-            d.col_jabatan,
-            e.gaji_pokok,
-            e.transport,
-            e.uang_makan,                                       
-            DATE_FORMAT(a.tgl_mulai_cuti,'%m%Y') as kode_mulai,
-            DATE_FORMAT(a.tgl_akhir_cuti,'%m%Y') as kode_akhir
-        FROM data_cuti a
-        JOIN data_pegawai b ON a.nip = b.nip
-        JOIN cuti c ON a.id_cuti = c.id
-        JOIN relation_cuti_potongan d ON d.id_cuti = c.id
-        JOIN data_jabatan e ON e.id_jabatan = a.id_jabatan
-        WHERE a.status_approval = 'SUCCESS'
-        AND a.nip = $nip;
-                        ")->result();
+        $data['potongan_cuti'] = $this->penggajianModel->potonganCutiById($nip);
         $this->load->view('templates_pegawai/header', $data);
         $this->load->view('pegawai/cetakSlipGaji', $data);
     }

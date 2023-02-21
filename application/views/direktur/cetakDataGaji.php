@@ -91,7 +91,7 @@
                                 $diff = date_diff($tgl1, $tgl2);
                                 $jumlah_hari_cuti = $diff->format("%d%") + 1;
                             } else {
-                                $jumlah_hari_cuti = $value->jumlah_hari + $jumlah_hari_cuti;
+                                $jumlah_hari_cuti = $value->jumlah_hari;
                             }
                             $pot =  (eval('return $value->' . $value->col_jabatan . ';') / $total_day_in_month) * $jumlah_hari_cuti;
                             $jumlah_potongan_cuti = $jumlah_potongan_cuti + $pot;
