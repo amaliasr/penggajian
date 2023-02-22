@@ -105,4 +105,14 @@ class PenggajianModel extends CI_model
                             ")->result();
         return $query;
     }
+    public function getDataRelation($id)
+    {
+        $query = $this->db->query("SELECT * FROM relation_cuti_potongan WHERE id_cuti = $id")->result();
+        return $query;
+    }
+    public function checkData($id)
+    {
+        $query = $this->db->query("SELECT * FROM data_cuti WHERE id_cuti = $id")->result();
+        return $query;
+    }
 }
