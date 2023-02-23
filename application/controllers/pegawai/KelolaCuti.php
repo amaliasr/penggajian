@@ -78,7 +78,11 @@ class KelolaCuti extends CI_Controller
         $nip = $this->input->post('nip');
         $id_cuti = $this->input->post('id_cuti');
         $year = $this->input->post('year');
-        $data = $this->db->query("SELECT SUM(a.jumlah_hari) as jumlah_cuti, a.nip, YEAR(a.tanggal_pengajuan), a.id_cuti, b.nama_cuti,b.batas_hari FROM data_cuti a JOIN cuti b ON a.id_cuti = b.id WHERE a.nip = $nip AND a.id_cuti = $id_cuti AND YEAR(a.tanggal_pengajuan) = $year  AND a.status_approval = 'PENDING' OR a.status_approval = 'SUCCESS' GROUP BY YEAR(a.tanggal_pengajuan), a.id_cuti, a.nip;")->result();
+        $data = $this->db->query("SELECT SUM(a.jumlah_hari) as jumlah_cuti, a.nip, YEAR(a.tanggal_pengajuan), a.id_cuti, b.nama_cuti,b.batas_hari FROM data_cuti a JOIN cuti b ON a.id_cuti = b.id WHERE a.nip = $nip AND a.id_cuti = $id_cuti AND YEAR(a.tanggal_pengajuan) = $year  AND (a.status_approval = 'PENDING' OR a.status_approval = 'SUCCESS') GROUP BY YEAR(a.tanggal_pengajuan), a.id_cuti, a.nip;")->result();
+        // print_r($data);
+        if (count($data) == 0) {
+            $data = $this->db->query("SELECT *,0 as jumlah_cuti FROM cuti WHERE id = $id_cuti;")->result();
+        }
         echo json_encode($data);
     }
 }
