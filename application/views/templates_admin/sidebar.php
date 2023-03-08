@@ -33,6 +33,7 @@
                         <a class="collapse-item" href="<?php echo base_url('admin/dataPegawai') ?>">Data Pegawai</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/dataJabatan') ?>">Data Jabatan</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/dataCuti') ?>">Data Cuti</a>
+                        <a class="collapse-item" href="<?php echo base_url('admin/dataPKP') ?>">Data PKP</a>
                     </div>
                 </div>
             </li>

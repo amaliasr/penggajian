@@ -115,4 +115,9 @@ class PenggajianModel extends CI_model
         $query = $this->db->query("SELECT * FROM data_cuti WHERE id_cuti = $id")->result();
         return $query;
     }
+    public function checkDataPKP($id)
+    {
+        $query = $this->db->query("SELECT * FROM data_pph WHERE id = $id")->result();
+        return $query;
+    }
 }
