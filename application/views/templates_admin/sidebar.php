@@ -34,6 +34,7 @@
                         <a class="collapse-item" href="<?php echo base_url('admin/dataJabatan') ?>">Data Jabatan</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/dataCuti') ?>">Data Cuti</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/dataPKP') ?>">Data PKP</a>
+                        <a class="collapse-item" href="<?php echo base_url('admin/dataKalenderTHR') ?>">Data Kalender THR</a>
                     </div>
                 </div>
             </li>
