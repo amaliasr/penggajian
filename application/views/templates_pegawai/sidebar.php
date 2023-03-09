@@ -28,6 +28,11 @@
                     <span>Pengajuan Cuti</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('pegawai/kelolaIjin') ?>">
+                    <i class="fas fa-fw fal fa-calendar"></i>
+                    <span>Pengajuan Ijin</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('pegawai/dataGaji') ?>">
                     <i class="fas fa-fw fal fa-money-check-alt"></i>
                     <span>Data Gaji</span></a>

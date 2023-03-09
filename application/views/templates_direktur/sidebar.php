@@ -26,6 +26,11 @@
                     <i class="fas fa-fw fal fa-calendar"></i>
                     <span>Cuti Karyawan</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('direktur/kelolaIjin') ?>">
+                    <i class="fas fa-fw fal fa-calendar"></i>
+                    <span>Perijinan Karyawan</span></a>
+            </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">

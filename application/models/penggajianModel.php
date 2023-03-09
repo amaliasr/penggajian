@@ -120,4 +120,9 @@ class PenggajianModel extends CI_model
         $query = $this->db->query("SELECT * FROM data_pph WHERE id = $id")->result();
         return $query;
     }
+    public function getDataKehadiran($bulan, $nip)
+    {
+        $query = $this->db->query("SELECT * FROM data_kehadiran WHERE bulan = '$bulan' AND nip = '$nip';")->result();
+        return $query;
+    }
 }
