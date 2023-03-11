@@ -69,6 +69,11 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('admin/posisiKaryawan') ?>">
+                    <i class="fas fa-fw fad fa-lock"></i>
+                    <span>Posisi Karyawan</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('gantiPassword') ?>">
                     <i class="fas fa-fw fad fa-lock"></i>
                     <span>Ubah Password</span></a>

@@ -120,9 +120,72 @@ class PenggajianModel extends CI_model
         $query = $this->db->query("SELECT * FROM data_pph WHERE id = $id")->result();
         return $query;
     }
+    public function listActiveKaryawan()
+    {
+        $query = $this->db->query("SELECT * FROM data_pegawai a 
+        JOIN data_jabatan b ON a.id_jabatan = b.id_jabatan 
+        LEFT JOIN lokasi_kerja c ON a.id_lokasi_kerja_pk = c.id
+        WHERE status_keaktifan = 'Aktif'")->result();
+        return $query;
+    }
     public function getDataKehadiran($bulan, $nip)
     {
         $query = $this->db->query("SELECT * FROM data_kehadiran WHERE bulan = '$bulan' AND nip = '$nip';")->result();
+        return $query;
+    }
+    public function getDataPromosi()
+    {
+        $query = $this->db->query("SELECT 
+        a.nip_pk,
+        a.alasan_promosi,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        a.keterangan,
+        b.nama_pegawai,
+        c.nama_jabatan as jabatan_baru,
+        d.nama_jabatan as jabatan_lama
+        FROM riwayat_promosi a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip
+        JOIN data_jabatan c ON a.id_jabatan_new_pk = c.id_jabatan
+        JOIN data_jabatan d ON a.id_jabatan_recent_pk = d.id_jabatan
+        ")->result();
+        return $query;
+    }
+    public function getDataMutasi()
+    {
+        $query = $this->db->query("SELECT 
+        a.nip_pk,
+        a.alasan_mutasi,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        b.nama_pegawai,
+        c.nama_jabatan as jabatan_baru,
+        d.nama_jabatan as jabatan_lama,
+        e.nama_lokasi as lokasi_baru,
+        f.nama_lokasi as lokasi_lama
+        FROM riwayat_mutasi a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip
+        JOIN data_jabatan c ON a.id_jabatan_new_pk = c.id_jabatan
+        JOIN data_jabatan d ON a.id_jabatan_recent_pk = d.id_jabatan
+        JOIN lokasi_kerja e ON a.id_lokasi_kerja_new_pk = e.id
+        JOIN lokasi_kerja f ON a.id_lokasi_kerja_recent_pk = f.id;
+        ")->result();
+        return $query;
+    }
+    public function getDataPHK()
+    {
+        $query = $this->db->query("SELECT 
+        a.nip_pk,
+        a.alasan_phk,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        b.nama_pegawai
+        FROM riwayat_phk a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip;
+        ")->result();
         return $query;
     }
 }
