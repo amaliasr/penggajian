@@ -105,6 +105,11 @@ class PenggajianModel extends CI_model
                             ")->result();
         return $query;
     }
+    public function getTableId($table, $pk, $id)
+    {
+        $query = $this->db->query("SELECT * FROM $table WHERE $pk = $id")->result();
+        return $query;
+    }
     public function getDataRelation($id)
     {
         $query = $this->db->query("SELECT * FROM relation_cuti_potongan WHERE id_cuti = $id")->result();
@@ -136,6 +141,7 @@ class PenggajianModel extends CI_model
     public function getDataPromosi()
     {
         $query = $this->db->query("SELECT 
+        a.id,
         a.nip_pk,
         a.alasan_promosi,
         a.tanggal,
@@ -155,6 +161,7 @@ class PenggajianModel extends CI_model
     public function getDataMutasi()
     {
         $query = $this->db->query("SELECT 
+        a.id,
         a.nip_pk,
         a.alasan_mutasi,
         a.tanggal,
@@ -177,6 +184,7 @@ class PenggajianModel extends CI_model
     public function getDataPHK()
     {
         $query = $this->db->query("SELECT 
+        a.id,
         a.nip_pk,
         a.alasan_phk,
         a.tanggal,

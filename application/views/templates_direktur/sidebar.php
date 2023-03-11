@@ -45,7 +45,11 @@
                     </div>
                 </div>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('direktur/posisiKaryawan') ?>">
+                    <i class="fas fa-fw fad fa-user"></i>
+                    <span>Posisi Karyawan</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('direktur/gantiPassword') ?>">
                     <i class="fas fa-fw fad fa-lock"></i>

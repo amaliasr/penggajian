@@ -70,7 +70,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('admin/posisiKaryawan') ?>">
-                    <i class="fas fa-fw fad fa-lock"></i>
+                    <i class="fas fa-fw fad fa-user"></i>
                     <span>Posisi Karyawan</span></a>
             </li>
             <li class="nav-item">

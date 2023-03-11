@@ -56,7 +56,7 @@ class PosisiKaryawan extends CI_Controller
                 'id_jabatan_new_pk' => $this->input->post('jabatan_baru'),
                 'id_jabatan_recent_pk' => $this->input->post('jabatan_lama'),
                 'id_lokasi_kerja_new_pk' => $this->input->post('lokasi_baru'),
-                'id_lokasi_kerja_recent_pk' => $this->input->post('lokasi_baru'),
+                'id_lokasi_kerja_recent_pk' => $this->input->post('lokasi_lama'),
                 'alasan_mutasi' => $this->input->post('alasan'),
                 'tanggal' => $this->input->post('tanggal'),
                 'bulan' => $this->input->post('bulan'),
