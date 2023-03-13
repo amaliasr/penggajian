@@ -22,7 +22,7 @@
 
         <table style="width: 50%">
             <tr>
-                <td width="20%">Nama Pegawai</td>
+                <td width="20%">Nama</td>
                 <td width="2%">:</td>
                 <td><?php echo $value->nama_pegawai ?></td>
             </tr>
@@ -54,12 +54,19 @@
             <tr>
                 <td>2</td>
                 <td>Masa Kerja</td>
-                <td>Rp. <?php echo $masaKaryawan[0]->masa_kerja ?></td>
+                <td><?php echo $masaKaryawan[0]->masa_kerja ?></td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>THR</td>
-                <td>Rp. <?php echo $masaKaryawan[0]->masa_kerja ?></td>
+                <?php
+                if ($masaKaryawan[0]->masa_kerja_bulan >= 12) {
+                    $thr = $masaKaryawan[0]->gaji_pokok;
+                } else {
+                    $thr = round(($masaKaryawan[0]->masa_kerja_bulan / 12) * $masaKaryawan[0]->gaji_pokok);
+                }
+                ?>
+                <td>Rp. <?php echo number_format($thr, 0, ',', '.') ?></td>
             </tr>
         </table>
 

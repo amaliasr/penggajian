@@ -17,7 +17,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2 ml-auto" onclick="tampilData()"><i class="fas fa-eye"></i>Tampilkan Data</button>
-                <button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal" id="btnCetak">
                     <i class="fas fa-print mr-1"></i>Cetak Daftar Gaji</button>
             </div>
         </div>
@@ -143,6 +143,10 @@
             var url = '<?= base_url() ?>admin/laporanTHR/slipTHRPerPerson/' + tgl_thr + '/' + nip
             window.open(url, '_blank')
         }
+        $(document).on('click', '#btnCetak', function(e) {
+            var tgl_thr = $('#tgl_thr').val()
+            cetakSlipTHR(tgl_thr)
+        })
 
         function cetakSlipTHR(tgl_thr) {
             var url = '<?= base_url() ?>admin/laporanTHR/slipTHR/' + tgl_thr

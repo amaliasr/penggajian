@@ -86,10 +86,9 @@ class LaporanTHR extends CI_Controller
         $this->load->view('templates_admin/header', $data);
         $this->load->view('admin/cetakSlipTHRId', $data);
     }
-    public function slipTHR($id)
+    public function slipTHR($tgl_thr)
     {
         $data['title'] = 'Cetak Slip THR';
-        $tgl_thr = $this->input->post('tgl_thr');
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawan();
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawan($tgl_thr);
         $this->load->view('templates_admin/header', $data);
