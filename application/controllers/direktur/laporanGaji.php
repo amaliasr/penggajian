@@ -47,7 +47,6 @@ class LaporanGaji extends CI_Controller
     public function cetakLaporanGaji()
     {
         $data['title'] = "Cetak Laporan Gaji Pegawai";
-
         if ((isset($_GET['bulan']) && $_GET['bulan'] != '') && (isset($_GET['tahun']) && $_GET['tahun'] != '')) {
             $bulan = $_GET['bulan'];
             $tahun = $_GET['tahun'];
@@ -58,6 +57,7 @@ class LaporanGaji extends CI_Controller
             $bulantahun = $bulan . $tahun;
         }
         $data['potongan'] = $this->penggajianModel->get_data('potongan_gaji')->result();
+        $data['pph21'] = $this->penggajianModel->get_data('data_pph')->result();
         $data['cetakGaji'] = $this->db->query("SELECT data_pegawai.nip, 
                 data_pegawai.nama_pegawai, data_pegawai.jenis_kelamin,
                 data_jabatan.nama_jabatan, data_jabatan.gaji_pokok, 

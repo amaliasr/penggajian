@@ -196,4 +196,25 @@ class PenggajianModel extends CI_model
         ")->result();
         return $query;
     }
+    public function listMasaKaryawan($tgl_thr)
+    {
+        $query = $this->db->query("SELECT
+        a.nip,
+        a.nama_pegawai,
+        b.nama_jabatan,
+        a.status,
+        a.status_keaktifan,
+        b.gaji_pokok,
+        a.tgl_masuk,
+        (DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')) AS 'masa_kerja_bulan',
+    CONCAT(
+    FLOOR(((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')))/12),' Tahun ',
+    MOD((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')),12), ' Bulan'
+    ) AS 'masa_kerja',
+    '$tgl_thr' as 'tgl_thr'
+    FROM data_pegawai a
+    JOIN data_jabatan b ON a.id_jabatan = b.id_jabatan
+    WHERE a.status_keaktifan = 'Aktif';")->result();
+        return $query;
+    }
 }

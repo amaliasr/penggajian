@@ -131,6 +131,31 @@
                             ?>)</td>
             </tr>
             <tr>
+                <td>9</td>
+                <td>PPH <small>(Ditanggung Perusahaan)</small></td>
+                <td>(Rp. <?php
+                            $totalSatuTahun = 12 * $ps->gaji_pokok;
+                            if ($ps->gaji_pokok >= 4500000) {
+                                foreach ($pph21 as $key => $value) {
+                                    if ($value->batas_atas < $totalSatuTahun && $value->batas_bawah >= $totalSatuTahun) {
+                                        $nettSebulan = $ps->gaji_pokok - ($ps->gaji_pokok * $value->persen / 100);
+                                        $nettSetahun = 12 * $nettSebulan;
+                                        if ($nettSetahun > 54000000) {
+                                            $penghasilanPKP = $nettSetahun - 54000000;
+                                            $pajakProgresif = $penghasilanPKP - ($penghasilanPKP * $value->persen / 100);
+                                            $pph21sebulan = $pajakProgresif / 12;
+                                            echo number_format($pph21sebulan, 0, ',', '.');
+                                        } else {
+                                            echo '-';
+                                        }
+                                    }
+                                }
+                            } else {
+                                echo '-';
+                            }
+                            ?>)</td>
+            </tr>
+            <tr>
                 <th colspan="2" style="text-align: right;">Total Gaji</th>
                 <th>Rp. <?php echo number_format($ps->gaji_pokok + $ps->transport + $ps->uang_makan - $potongan_gaji - $jumlah_potongan_cuti, 0, ',', '.') ?></th>
             </tr>

@@ -56,6 +56,7 @@
             <th class="text-center">Uang Makan</th>
             <th class="text-center">Potongan</th>
             <th class="text-center">Potongan Cuti</th>
+            <th class="text-center bg-warning">PPH21<br><small>(Ditanggung perusahaan)</small></th>
             <th class="text-center">Total Gaji</th>
         </tr>
 
@@ -98,6 +99,29 @@
                         }
                     }
                     echo number_format($jumlah_potongan_cuti, 0, ',', '.');
+                    ?>
+                </td>
+                <td class="bg-warning">
+                    <?php
+                    $totalSatuTahun = 12 * $g->gaji_pokok;
+                    if ($g->gaji_pokok >= 4500000) {
+                        foreach ($pph21 as $key => $value) {
+                            if ($value->batas_atas < $totalSatuTahun && $value->batas_bawah >= $totalSatuTahun) {
+                                $nettSebulan = $g->gaji_pokok - ($g->gaji_pokok * $value->persen / 100);
+                                $nettSetahun = 12 * $nettSebulan;
+                                if ($nettSetahun > 54000000) {
+                                    $penghasilanPKP = $nettSetahun - 54000000;
+                                    $pajakProgresif = $penghasilanPKP - ($penghasilanPKP * $value->persen / 100);
+                                    $pph21sebulan = $pajakProgresif / 12;
+                                    echo number_format($pph21sebulan, 0, ',', '.');
+                                } else {
+                                    echo '-';
+                                }
+                            }
+                        }
+                    } else {
+                        echo '-';
+                    }
                     ?>
                 </td>
                 <td>Rp <?php echo number_format($g->gaji_pokok + $g->transport + $g->uang_makan - $potongan - $jumlah_potongan_cuti, 0, ',', '.') ?></td>

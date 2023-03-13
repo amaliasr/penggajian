@@ -20,6 +20,7 @@ class DataGaji extends CI_Controller
         $data['title'] = "Data Gaji";
         $nip = $this->session->userdata('nip');
         $data['potongan'] = $this->penggajianModel->get_data('potongan_gaji')->result();
+        $data['pph21'] = $this->penggajianModel->get_data('data_pph')->result();
         $data['gaji'] = $this->db->query("SELECT data_pegawai.nama_pegawai, data_pegawai.nip, 
         data_jabatan.gaji_pokok, data_jabatan.transport,data_jabatan.uang_makan, data_kehadiran.alpha, 
         data_kehadiran.bulan, data_kehadiran.id_kehadiran
@@ -40,7 +41,7 @@ class DataGaji extends CI_Controller
         $nip = $this->session->userdata('nip');
         $data['title'] = "Cetak Slip Gaji";
         $data['potongan'] = $this->penggajianModel->get_data('potongan_gaji')->result();
-
+        $data['pph21'] = $this->penggajianModel->get_data('data_pph')->result();
         $data['print_slip'] = $this->db->query("SELECT data_pegawai.nip, data_pegawai.nama_pegawai, data_jabatan.nama_jabatan, 
                         data_jabatan.gaji_pokok,data_jabatan.transport, data_jabatan.uang_makan, data_kehadiran.alpha, data_kehadiran.bulan
         FROM data_pegawai
