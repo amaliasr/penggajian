@@ -133,6 +133,14 @@ class PenggajianModel extends CI_model
         WHERE status_keaktifan = 'Aktif'")->result();
         return $query;
     }
+    public function listActiveKaryawanId($nip)
+    {
+        $query = $this->db->query("SELECT * FROM data_pegawai a 
+        JOIN data_jabatan b ON a.id_jabatan = b.id_jabatan 
+        LEFT JOIN lokasi_kerja c ON a.id_lokasi_kerja_pk = c.id
+        WHERE a.status_keaktifan = 'Aktif' AND a.nip = '$nip'")->result();
+        return $query;
+    }
     public function getDataKehadiran($bulan, $nip)
     {
         $query = $this->db->query("SELECT * FROM data_kehadiran WHERE bulan = '$bulan' AND nip = '$nip';")->result();
@@ -214,7 +222,29 @@ class PenggajianModel extends CI_model
     '$tgl_thr' as 'tgl_thr'
     FROM data_pegawai a
     JOIN data_jabatan b ON a.id_jabatan = b.id_jabatan
-    WHERE a.status_keaktifan = 'Aktif';")->result();
+    WHERE a.status_keaktifan = 'Aktif'")->result();
+        return $query;
+    }
+    public function listMasaKaryawanId($tgl_thr, $nip)
+    {
+        $query = $this->db->query("SELECT
+        a.nip,
+        a.nama_pegawai,
+        b.nama_jabatan,
+        a.status,
+        a.status_keaktifan,
+        b.gaji_pokok,
+        a.tgl_masuk,
+        (DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')) AS 'masa_kerja_bulan',
+    CONCAT(
+    FLOOR(((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')))/12),' Tahun ',
+    MOD((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(a.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(a.tgl_masuk,'%m')),12), ' Bulan'
+    ) AS 'masa_kerja',
+    '$tgl_thr' as 'tgl_thr'
+    FROM data_pegawai a
+    JOIN data_jabatan b ON a.id_jabatan = b.id_jabatan
+    WHERE a.status_keaktifan = 'Aktif'
+    AND a.nip = '$nip';")->result();
         return $query;
     }
 }

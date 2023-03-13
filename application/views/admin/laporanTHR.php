@@ -33,7 +33,7 @@
                             <th>Tanggal THR</th>
                             <th>Masa Kerja</th>
                             <th>Gaji Pokok</th>
-                            <th>Nominal</th>
+                            <th>Nominal THR</th>
                             <th>Cetak Slip</th>
                         </tr>
                     </thead>
@@ -75,6 +75,10 @@
             var d = Math.round(total_days);
             return d;
         }
+
+        function number_format(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
         $(document).ready(function() {
             getData()
         })
@@ -112,18 +116,36 @@
                     var html = ''
                     $.each(data_karyawan.masaKaryawan, function(key, value) {
                         html += '<tr>'
-                        html += '<td>' + parseInt(key) + 1 + '</td>'
+                        html += '<td>' + (parseInt(key) + 1) + '</td>'
                         html += '<td>' + value.nip + '</td>'
                         html += '<td>' + value.nama_pegawai + '</td>'
                         html += '<td>' + value.tgl_masuk + '</td>'
                         html += '<td>' + value.tgl_thr + '</td>'
                         html += '<td>' + value.masa_kerja + '</td>'
-                        html += '<td>' + value.gaji_pokok + '</td>'
-                        html += '<td></td>'
-                        html += '<td><button class="btn btn-sm btn-primary"><i class="fa fa-print"></i></button></td>'
+                        html += '<td>' + number_format(value.gaji_pokok) + '</td>'
+                        html += '<td>'
+                        if (value.masa_kerja_bulan >= 12) {
+                            html += number_format(value.gaji_pokok)
+                        } else {
+                            var total = (parseInt(value.masa_kerja_bulan) / 12) * value.gaji_pokok
+                            html += number_format(total)
+                        }
+                        html == '</td>'
+                        html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson('++')"><i class="fa fa-print"></i></button></td>'
                         html += '</tr>'
                     })
+                    $('#listData').html(html)
                 }
             })
+        }
+
+        function cetakSlipTHRPerPerson(id, id_karyawan) {
+            var url = '<?= base_url() ?>laporanTHR/slipTHRPerPerson/' + id + '/' + id_karyawan
+            window.open(url, '_blank')
+        }
+
+        function cetakSlipTHR(id, id_karyawan) {
+            var url = '<?= base_url() ?>laporanTHR/slipTHR/' + id
+            window.open(url, '_blank')
         }
     </script>
