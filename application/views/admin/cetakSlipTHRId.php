@@ -48,8 +48,18 @@
             </tr>
             <tr>
                 <td>1</td>
+                <td>Gaji Pokok</td>
+                <td>Rp. <?php echo number_format($masaKaryawan[0]->gaji_pokok, 0, ',', '.') ?></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Masa Kerja</td>
+                <td>Rp. <?php echo $masaKaryawan[0]->masa_kerja ?></td>
+            </tr>
+            <tr>
+                <td>3</td>
                 <td>THR</td>
-                <td>Rp. <?php echo number_format($value->gaji_pokok, 0, ',', '.') ?></td>
+                <td>Rp. <?php echo $masaKaryawan[0]->masa_kerja ?></td>
             </tr>
         </table>
 
@@ -60,7 +70,7 @@
                     <p>Pegawai</p>
                     <br>
                     <br>
-                    <p class="font-weight-bold"><?php echo $ps->nama_pegawai ?></p>
+                    <p class="font-weight-bold"><?php echo $value->nama_pegawai ?></p>
                 </td>
 
                 <td width="200px">

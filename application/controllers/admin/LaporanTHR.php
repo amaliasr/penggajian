@@ -78,10 +78,9 @@ class LaporanTHR extends CI_Controller
             print json_encode(array("status" => "failed", "message" => "Gagal Input"));
         }
     }
-    public function slipTHRPerPerson($id, $nip)
+    public function slipTHRPerPerson($tgl_thr, $nip)
     {
         $data['title'] = 'Cetak Slip THR';
-        $tgl_thr = $this->input->post('tgl_thr');
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawanId($nip);
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawanId($tgl_thr, $nip);
         $this->load->view('templates_admin/header', $data);

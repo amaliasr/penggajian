@@ -131,7 +131,7 @@
                             html += number_format(total)
                         }
                         html == '</td>'
-                        html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson('++')"><i class="fa fa-print"></i></button></td>'
+                        html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + tgl_thr + "'" + ',' + "'" + value.nip + "'" + ')"><i class="fa fa-print"></i></button></td>'
                         html += '</tr>'
                     })
                     $('#listData').html(html)
@@ -139,13 +139,13 @@
             })
         }
 
-        function cetakSlipTHRPerPerson(id, id_karyawan) {
-            var url = '<?= base_url() ?>laporanTHR/slipTHRPerPerson/' + id + '/' + id_karyawan
+        function cetakSlipTHRPerPerson(tgl_thr, nip) {
+            var url = '<?= base_url() ?>admin/laporanTHR/slipTHRPerPerson/' + tgl_thr + '/' + nip
             window.open(url, '_blank')
         }
 
-        function cetakSlipTHR(id, id_karyawan) {
-            var url = '<?= base_url() ?>laporanTHR/slipTHR/' + id
+        function cetakSlipTHR(tgl_thr) {
+            var url = '<?= base_url() ?>admin/laporanTHR/slipTHR/' + tgl_thr
             window.open(url, '_blank')
         }
     </script>
