@@ -229,7 +229,7 @@ class PenggajianModel extends CI_model
         JOIN data_jabatan c ON a.id_jabatan_new_pk = c.id_jabatan
         JOIN data_jabatan d ON a.id_jabatan_recent_pk = d.id_jabatan
         JOIN lokasi_kerja e ON a.id_lokasi_kerja_new_pk = e.id
-        JOIN lokasi_kerja f ON a.id_lokasi_kerja_recent_pk = f.id;
+        JOIN lokasi_kerja f ON a.id_lokasi_kerja_recent_pk = f.id
         AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') >= '$tgl_awal' AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') <= '$tgl_akhir';
         ")->result();
         return $query;

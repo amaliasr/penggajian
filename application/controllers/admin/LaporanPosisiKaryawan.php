@@ -41,12 +41,20 @@ class LaporanPosisiKaryawan extends CI_Controller
         $data  = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir);
         echo json_encode($data);
     }
-    public function slipTHR($tgl_thr)
+    public function cetakLaporan($kategori, $tanggal_awal, $tanggal_akhir)
     {
-        $data['title'] = 'Cetak Slip THR';
-        $data['karyawan'] = $this->penggajianModel->listActiveKaryawan();
-        $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawan($tgl_thr);
+        $data['title'] = 'Cetak Laporan Posisi';
+        if ($kategori == 'PROMOSI') {
+            $data['laporan'] = $this->penggajianModel->getDataPromosiDate($tanggal_awal, $tanggal_akhir);
+        } else if ($kategori == 'MUTASI') {
+            $data['laporan'] = $this->penggajianModel->getDataMutasiDate($tanggal_awal, $tanggal_akhir);
+        } else {
+            $data['laporan'] = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir);
+        }
+        $data['kategori'] = $kategori;
+        $data['tanggal_awal'] = $tanggal_awal;
+        $data['tanggal_akhir'] = $tanggal_akhir;
         $this->load->view('templates_admin/header', $data);
-        $this->load->view('admin/cetakSlipTHR', $data);
+        $this->load->view('admin/cetakLaporanPosisi', $data);
     }
 }

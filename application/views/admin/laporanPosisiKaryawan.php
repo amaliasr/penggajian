@@ -77,6 +77,7 @@
         $(document).ready(function() {})
 
         function tampilData() {
+            $('#tampilLaporan').html('')
             var kategori = $('#kategori').val()
             if (kategori == 'PROMOSI') {
                 tampilPromosi()
@@ -93,12 +94,10 @@
 
         function tampilMutasi() {
             ajax('dataMutasi', 'MUTASI')
-
         }
 
         function tampilPhk() {
             ajax('dataPHK', 'PHK')
-
         }
 
         function ajax(link, kategori) {
@@ -224,12 +223,14 @@
         }
 
         $(document).on('click', '#btnCetak', function(e) {
-            var tgl_thr = $('#tgl_thr').val()
-            cetakSlipTHR(tgl_thr)
+            var kategori = $('#kategori').val()
+            var tanggal_awal = $('#tanggal_awal').val()
+            var tanggal_akhir = $('#tanggal_akhir').val()
+            cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir)
         })
 
-        function cetakSlipTHR(tgl_thr) {
-            var url = '<?= base_url() ?>admin/laporanTHR/slipTHR/' + tgl_thr
+        function cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir) {
+            var url = '<?= base_url() ?>admin/laporanPosisiKaryawan/cetakLaporan/' + kategori + '/' + tanggal_awal + '/' + tanggal_akhir
             window.open(url, '_blank')
         }
     </script>
