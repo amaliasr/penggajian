@@ -42,6 +42,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo base_url('direktur/laporanGaji') ?>">Laporan Gaji</a>
                         <a class="collapse-item" href="<?php echo base_url('direktur/laporanPresensi') ?>">Laporan Presensi</a>
+                        <a class="collapse-item" href="<?php echo base_url('direktur/laporanTHR') ?>">Laporan THR</a>
                     </div>
                 </div>
             </li>

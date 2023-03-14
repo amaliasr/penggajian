@@ -166,6 +166,27 @@ class PenggajianModel extends CI_model
         ")->result();
         return $query;
     }
+    public function getDataPromosiDate($tgl_awal, $tgl_akhir)
+    {
+        $query = $this->db->query("SELECT 
+        a.id,
+        a.nip_pk,
+        a.alasan_promosi,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        a.keterangan,
+        b.nama_pegawai,
+        c.nama_jabatan as jabatan_baru,
+        d.nama_jabatan as jabatan_lama
+        FROM riwayat_promosi a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip
+        JOIN data_jabatan c ON a.id_jabatan_new_pk = c.id_jabatan
+        JOIN data_jabatan d ON a.id_jabatan_recent_pk = d.id_jabatan
+        AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') >= '$tgl_awal' AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') <= '$tgl_akhir';
+        ")->result();
+        return $query;
+    }
     public function getDataMutasi()
     {
         $query = $this->db->query("SELECT 
@@ -189,6 +210,30 @@ class PenggajianModel extends CI_model
         ")->result();
         return $query;
     }
+    public function getDataMutasiDate($tgl_awal, $tgl_akhir)
+    {
+        $query = $this->db->query("SELECT 
+        a.id,
+        a.nip_pk,
+        a.alasan_mutasi,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        b.nama_pegawai,
+        c.nama_jabatan as jabatan_baru,
+        d.nama_jabatan as jabatan_lama,
+        e.nama_lokasi as lokasi_baru,
+        f.nama_lokasi as lokasi_lama
+        FROM riwayat_mutasi a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip
+        JOIN data_jabatan c ON a.id_jabatan_new_pk = c.id_jabatan
+        JOIN data_jabatan d ON a.id_jabatan_recent_pk = d.id_jabatan
+        JOIN lokasi_kerja e ON a.id_lokasi_kerja_new_pk = e.id
+        JOIN lokasi_kerja f ON a.id_lokasi_kerja_recent_pk = f.id;
+        AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') >= '$tgl_awal' AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') <= '$tgl_akhir';
+        ")->result();
+        return $query;
+    }
     public function getDataPHK()
     {
         $query = $this->db->query("SELECT 
@@ -201,6 +246,23 @@ class PenggajianModel extends CI_model
         b.nama_pegawai
         FROM riwayat_phk a 
         JOIN data_pegawai b ON a.nip_pk = b.nip;
+        ")->result();
+        return $query;
+    }
+    public function getDataPHKDate($tgl_awal, $tgl_akhir)
+    {
+        $query = $this->db->query("SELECT 
+        a.id,
+        a.nip_pk,
+        a.alasan_phk,
+        a.tanggal,
+        a.bulan,
+        a.status,
+        b.nama_pegawai
+        FROM riwayat_phk a 
+        JOIN data_pegawai b ON a.nip_pk = b.nip
+        AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') >= '$tgl_awal' AND DATE_FORMAT(a.tanggal,'%Y-%m-%d') <= '$tgl_akhir';
+
         ")->result();
         return $query;
     }

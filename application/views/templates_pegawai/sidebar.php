@@ -37,6 +37,11 @@
                     <i class="fas fa-fw fal fa-money-check-alt"></i>
                     <span>Data Gaji</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('pegawai/dataTHR') ?>">
+                    <i class="fas fa-fw fal fa-money-check-alt"></i>
+                    <span>Data THR</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('pegawai/gantiPassword') ?>">

@@ -65,6 +65,7 @@
                         <a class="collapse-item" href="<?php echo base_url('admin/laporanGaji') ?>">Laporan Gaji</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/laporanPresensi') ?>">Laporan Presensi</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/laporanTHR') ?>">Laporan THR</a>
+                        <a class="collapse-item" href="<?php echo base_url('admin/laporanPosisiKaryawan') ?>">Laporan Posisi Karyawan</a>
                     </div>
                 </div>
             </li>
