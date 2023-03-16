@@ -25,6 +25,7 @@ class LaporanTHR extends CI_Controller
         $tgl_thr = $this->input->post('tgl_thr');
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawan();
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawan($tgl_thr);
+        $data['thr'] = $this->penggajianModel->semuaTHR($tgl_thr);
         echo json_encode($data);
     }
     public function dataKalender()
@@ -83,6 +84,7 @@ class LaporanTHR extends CI_Controller
         $data['title'] = 'Cetak Slip THR';
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawanId($nip);
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawanId($tgl_thr, $nip);
+        $data['thr'] = $this->penggajianModel->semuaTHRnip($tgl_thr, $nip);
         $this->load->view('templates_direktur/header', $data);
         $this->load->view('direktur/cetakSlipTHRId', $data);
     }
@@ -91,6 +93,7 @@ class LaporanTHR extends CI_Controller
         $data['title'] = 'Cetak Slip THR';
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawan();
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawan($tgl_thr);
+        $data['thr'] = $this->penggajianModel->semuaTHR($tgl_thr);
         $this->load->view('templates_direktur/header', $data);
         $this->load->view('direktur/cetakSlipTHR', $data);
     }

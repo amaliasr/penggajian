@@ -50,6 +50,7 @@
                         <a class="collapse-item" href="<?php echo base_url('admin/dataPresensi') ?>">Data Presensi</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/potonganGaji') ?>">Setting Potongan Gaji</a>
                         <a class="collapse-item" href="<?php echo base_url('admin/dataPenggajian') ?>">Data Gaji</a>
+                        <a class="collapse-item" href="<?php echo base_url('admin/dataTHR') ?>">Data THR</a>
                     </div>
                 </div>
             </li>

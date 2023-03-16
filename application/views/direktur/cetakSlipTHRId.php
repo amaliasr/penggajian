@@ -49,24 +49,17 @@
             <tr>
                 <td>1</td>
                 <td>Gaji Pokok</td>
-                <td>Rp. <?php echo number_format($masaKaryawan[0]->gaji_pokok, 0, ',', '.') ?></td>
+                <td>Rp. <?php echo number_format($thr[0]->gaji_pokok, 0, ',', '.') ?></td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>Masa Kerja</td>
-                <td><?php echo $masaKaryawan[0]->masa_kerja ?></td>
+                <td><?php echo $thr[0]->masa_kerja ?></td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>THR</td>
-                <?php
-                if ($masaKaryawan[0]->masa_kerja_bulan >= 12) {
-                    $thr = $masaKaryawan[0]->gaji_pokok;
-                } else {
-                    $thr = round(($masaKaryawan[0]->masa_kerja_bulan / 12) * $masaKaryawan[0]->gaji_pokok);
-                }
-                ?>
-                <td>Rp. <?php echo number_format($thr, 0, ',', '.') ?></td>
+                <td>Rp. <?php echo number_format($thr[0]->nominal, 0, ',', '.') ?></td>
             </tr>
         </table>
 

@@ -40,7 +40,7 @@
         </tr>
 
         <?php $no = 1;
-        foreach ($masaKaryawan as $value) { ?>
+        foreach ($thr as $value) { ?>
             <td><?php echo $no++ ?></td>
             <td><?php echo $value->nip ?></td>
             <td><?php echo $value->nama_pegawai ?></td>
@@ -48,14 +48,7 @@
             <td><?php echo $value->tgl_thr ?></td>
             <td><?php echo $value->masa_kerja ?></td>
             <td>Rp. <?php echo number_format($value->gaji_pokok, 0, ',', '.') ?></td>
-            <?php
-            if ($value->masa_kerja_bulan >= 12) {
-                $thr = $value->gaji_pokok;
-            } else {
-                $thr = round(($value->masa_kerja_bulan / 12) * $value->gaji_pokok);
-            }
-            ?>
-            <td>Rp. <?php echo number_format($thr, 0, ',', '.') ?></td>
+            <td>Rp. <?php echo number_format($value->nominal, 0, ',', '.') ?></td>
             </tr>
         <?php } ?>
     </table>

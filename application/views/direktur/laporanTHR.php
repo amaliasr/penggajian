@@ -18,7 +18,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary mb-2 ml-auto" onclick="tampilData()"><i class="fas fa-eye"></i>Tampilkan Data</button>
                 <button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal" id="btnCetak">
-                    <i class="fas fa-print mr-1"></i>Cetak Daftar Gaji</button>
+                    <i class="fas fa-print mr-1"></i>Cetak Daftar THR</button>
             </div>
         </div>
         <div class="card">
@@ -114,26 +114,25 @@
                 success: function(response) {
                     data_karyawan = JSON.parse(response)
                     var html = ''
-                    $.each(data_karyawan.masaKaryawan, function(key, value) {
+                    if (data_karyawan.thr.length != 0) {
+                        $.each(data_karyawan.thr, function(key, value) {
+                            html += '<tr>'
+                            html += '<td>' + (parseInt(key) + 1) + '</td>'
+                            html += '<td>' + value.nip + '</td>'
+                            html += '<td>' + value.nama_pegawai + '</td>'
+                            html += '<td>' + value.tgl_masuk + '</td>'
+                            html += '<td>' + value.tgl_thr + '</td>'
+                            html += '<td>' + value.masa_kerja + '</td>'
+                            html += '<td>' + number_format(value.gaji_pokok) + '</td>'
+                            html += '<td>' + number_format(value.nominal) + '</td>'
+                            html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + tgl_thr + "'" + ',' + "'" + value.nip + "'" + ')"><i class="fa fa-print"></i></button></td>'
+                            html += '</tr>'
+                        })
+                    } else {
                         html += '<tr>'
-                        html += '<td>' + (parseInt(key) + 1) + '</td>'
-                        html += '<td>' + value.nip + '</td>'
-                        html += '<td>' + value.nama_pegawai + '</td>'
-                        html += '<td>' + value.tgl_masuk + '</td>'
-                        html += '<td>' + value.tgl_thr + '</td>'
-                        html += '<td>' + value.masa_kerja + '</td>'
-                        html += '<td>' + number_format(value.gaji_pokok) + '</td>'
-                        html += '<td>'
-                        if (value.masa_kerja_bulan >= 12) {
-                            html += number_format(value.gaji_pokok)
-                        } else {
-                            var total = (parseInt(value.masa_kerja_bulan) / 12) * value.gaji_pokok
-                            html += number_format(total)
-                        }
-                        html == '</td>'
-                        html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + tgl_thr + "'" + ',' + "'" + value.nip + "'" + ')"><i class="fa fa-print"></i></button></td>'
+                        html += '<td colspan="9" class="text-center"><i>Tidak Ada Data, Silahkan Input Terlebih Dahulu</i></td>'
                         html += '</tr>'
-                    })
+                    }
                     $('#listData').html(html)
                 }
             })

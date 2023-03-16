@@ -17,8 +17,6 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2 ml-auto" onclick="tampilData()"><i class="fas fa-eye"></i>Tampilkan Data</button>
-                <button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal" id="btnCetak">
-                    <i class="fas fa-print mr-1"></i>Cetak Daftar THR</button>
             </div>
         </div>
         <div class="card">
@@ -34,12 +32,14 @@
                             <th>Masa Kerja</th>
                             <th>Gaji Pokok</th>
                             <th>Nominal THR</th>
-                            <th>Cetak Slip</th>
                         </tr>
                     </thead>
                     <tbody id="listData">
                     </tbody>
                 </table>
+
+                <button type="button" class="btn btn-success float-right" onclick="simpan()"><i class="fa fa-save mr-2"></i>Simpan</button>
+
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
 
         function getData() {
             $.ajax({
-                url: '<?php echo base_url(); ?>admin/laporanTHR/dataKalender',
+                url: '<?php echo base_url(); ?>admin/dataTHR/dataKalender',
                 type: 'GET',
                 beforeSend: function() {},
                 success: function(response) {
@@ -95,27 +95,30 @@
                     var html = ''
                     html += '<option value="" selected disabled>--Pilih Tanggal THR--</option>'
                     $.each(data_kalender, function(key, value) {
-                        html += '<option value="' + value.tanggal_thr + '">' + value.tanggal_thr + '</option>'
+                        html += '<option value="' + value.tanggal_thr + '" data-id="' + value.id + '">' + value.tanggal_thr + '</option>'
                     })
                     $('#tgl_thr').html(html)
                 }
             })
         }
+        var data_simpan = []
 
         function tampilData() {
             var tgl_thr = $('#tgl_thr').val()
+            var id = $('#tgl_thr').find(':selected').data('id')
             $.ajax({
-                url: '<?php echo base_url(); ?>admin/laporanTHR/dataKaryawan',
+                url: '<?php echo base_url(); ?>admin/dataTHR/dataKaryawan',
                 type: 'POST',
                 data: {
                     tgl_thr: tgl_thr,
+                    id: id,
                 },
                 beforeSend: function() {},
                 success: function(response) {
                     data_karyawan = JSON.parse(response)
                     var html = ''
-                    if (data_karyawan.thr.length != 0) {
-                        $.each(data_karyawan.thr, function(key, value) {
+                    if (data_karyawan.masaKaryawan.length != 0) {
+                        $.each(data_karyawan.masaKaryawan, function(key, value) {
                             html += '<tr>'
                             html += '<td>' + (parseInt(key) + 1) + '</td>'
                             html += '<td>' + value.nip + '</td>'
@@ -124,13 +127,23 @@
                             html += '<td>' + value.tgl_thr + '</td>'
                             html += '<td>' + value.masa_kerja + '</td>'
                             html += '<td>' + number_format(value.gaji_pokok) + '</td>'
-                            html += '<td>' + number_format(value.nominal) + '</td>'
-                            html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + tgl_thr + "'" + ',' + "'" + value.nip + "'" + ')"><i class="fa fa-print"></i></button></td>'
+                            html += '<td>'
+                            if (value.masa_kerja_bulan >= 12) {
+                                var total = value.gaji_pokok
+                            } else {
+                                var total = (parseInt(value.masa_kerja_bulan) / 12) * value.gaji_pokok
+                            }
+                            html += number_format(total)
+                            html == '</td>'
                             html += '</tr>'
+                            data_simpan.push({
+                                'nip': value.nip,
+                                'nominal': total,
+                            })
                         })
                     } else {
                         html += '<tr>'
-                        html += '<td colspan="9" class="text-center"><i>Tidak Ada Data, Silahkan Input Terlebih Dahulu</i></td>'
+                        html += '<td colspan="8" class="text-center"><i>Tidak Ada Data, Data Telah Tersimpan</i></td>'
                         html += '</tr>'
                     }
                     $('#listData').html(html)
@@ -138,17 +151,25 @@
             })
         }
 
-        function cetakSlipTHRPerPerson(tgl_thr, nip) {
-            var url = '<?= base_url() ?>admin/laporanTHR/slipTHRPerPerson/' + tgl_thr + '/' + nip
-            window.open(url, '_blank')
+        function simpan() {
+            var data = {
+                tanggal_thr: $('#tgl_thr').find(':selected').data('id'),
+                detail: data_simpan,
+            }
+            var url = '<?php echo base_url(); ?>admin/dataTHR/simpan'
+            ajaxKalenderTHR(data, url)
         }
-        $(document).on('click', '#btnCetak', function(e) {
-            var tgl_thr = $('#tgl_thr').val()
-            cetakSlipTHR(tgl_thr)
-        })
 
-        function cetakSlipTHR(tgl_thr) {
-            var url = '<?= base_url() ?>admin/laporanTHR/slipTHR/' + tgl_thr
-            window.open(url, '_blank')
+        function ajaxKalenderTHR(data, url) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                beforeSend: function() {},
+                success: function(response) {
+                    alert(JSON.parse(response).message)
+                    getData()
+                }
+            })
         }
     </script>

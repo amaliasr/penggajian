@@ -309,4 +309,54 @@ class PenggajianModel extends CI_model
     AND a.nip = '$nip';")->result();
         return $query;
     }
+    public function listKalenderTHR()
+    {
+        $query = $this->db->query("SELECT a.id, a.tanggal_thr, a.bulan_thr, b.id_kalender_thr_pk FROM kalender_thr a LEFT JOIN riwayat_thr b ON a.id = b.id_kalender_thr_pk GROUP BY a.id;")->result();
+        return $query;
+    }
+    public function semuaTHR($tgl_thr)
+    {
+        $query = $this->db->query("SELECT 
+        c.nip,
+        c.nama_pegawai,
+        c.tgl_masuk,
+        b.tanggal_thr as tgl_thr,
+        d.gaji_pokok,
+        a.nominal,
+        CONCAT(
+    FLOOR(((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(c.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(c.tgl_masuk,'%m')))/12),' Tahun ',
+    MOD((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(c.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(c.tgl_masuk,'%m')),12), ' Bulan'
+    ) AS 'masa_kerja'
+        FROM riwayat_thr a
+        JOIN kalender_thr b ON a.id_kalender_thr_pk = b.id
+        JOIN data_pegawai c ON a.nip_pk = c.nip
+        JOIN data_jabatan d ON c.id_jabatan = d.id_jabatan
+        WHERE b.tanggal_thr = '$tgl_thr'
+        AND c.status_keaktifan = 'Aktif'
+        ")->result();
+        return $query;
+    }
+    public function semuaTHRnip($tgl_thr, $nip)
+    {
+        $query = $this->db->query("SELECT 
+        c.nip,
+        c.nama_pegawai,
+        c.tgl_masuk,
+        b.tanggal_thr as tgl_thr,
+        d.gaji_pokok,
+        a.nominal,
+        CONCAT(
+    FLOOR(((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(c.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(c.tgl_masuk,'%m')))/12),' Tahun ',
+    MOD((DATE_FORMAT('$tgl_thr','%Y')-DATE_FORMAT(c.tgl_masuk,'%Y'))*12+(DATE_FORMAT('$tgl_thr','%m')-DATE_FORMAT(c.tgl_masuk,'%m')),12), ' Bulan'
+    ) AS 'masa_kerja'
+        FROM riwayat_thr a
+        JOIN kalender_thr b ON a.id_kalender_thr_pk = b.id
+        JOIN data_pegawai c ON a.nip_pk = c.nip
+        JOIN data_jabatan d ON c.id_jabatan = d.id_jabatan
+        WHERE b.tanggal_thr = '$tgl_thr'
+        AND c.status_keaktifan = 'Aktif'
+        AND c.nip = '$nip'
+        ")->result();
+        return $query;
+    }
 }
