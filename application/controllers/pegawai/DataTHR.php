@@ -1,5 +1,5 @@
 <?php
-class LaporanTHR extends CI_Controller
+class dataTHR extends CI_Controller
 {
     public function __construct()
     {
@@ -23,12 +23,15 @@ class LaporanTHR extends CI_Controller
     public function dataKaryawan()
     {
         $nip = $this->session->userdata('nip');
-        $data['thr'] = $this->penggajianModel->listThrId($nip);
+        $tgl_thr = $this->session->userdata('tgl_thr');
+        $data['thr'] = $this->penggajianModel->semuaTHRnip($tgl_thr, $nip);
         echo json_encode($data);
     }
     public function dataKalender()
     {
-        $data = $this->penggajianModel->get_data('kalender_thr')->result();
+        $nip = $this->session->userdata('nip');
+        $data['kalender'] = $this->penggajianModel->get_data('kalender_thr')->result();
+        $data['seleksi'] = $this->penggajianModel->getTableId('riwayat_thr', 'nip_pk', $nip);
         echo json_encode($data);
     }
 
@@ -38,6 +41,7 @@ class LaporanTHR extends CI_Controller
         $nip = $this->session->userdata('nip');
         $data['karyawan'] = $this->penggajianModel->listActiveKaryawanId($nip);
         $data['masaKaryawan'] = $this->penggajianModel->listMasaKaryawanId($tgl_thr, $nip);
+        $data['thr'] = $this->penggajianModel->semuaTHRnip($tgl_thr, $nip);
         $this->load->view('templates_pegawai/header', $data);
         $this->load->view('pegawai/cetakSlipTHRId', $data);
     }

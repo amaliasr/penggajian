@@ -5,42 +5,18 @@
 
     </div>
     <div class="card mb-3">
-        <div class="card-header bg-primary text-white">
-            Filter Data Gaji Pegawai
-        </div>
-
         <div class="card-body">
-            <div class="form-inline">
-                <div class="form-group mb-2">
-                    <label for="statisticEmail2">Tanggal THR: </label>
-                    <select class="form-control ml-3" name="tgl_thr" id="tgl_thr">
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mb-2 ml-auto" onclick="tampilData()"><i class="fas fa-eye"></i>Tampilkan Data</button>
-                <button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal" id="btnCetak">
-                    <i class="fas fa-print mr-1"></i>Cetak Daftar Gaji</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>NIP</th>
-                            <th>Nama Karyawan</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Tanggal THR</th>
-                            <th>Masa Kerja</th>
-                            <th>Gaji Pokok</th>
-                            <th>Nominal THR</th>
-                            <th>Cetak Slip</th>
-                        </tr>
-                    </thead>
-                    <tbody id="listData">
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tanggal</th>
+                        <th>Cetak Slip</th>
+                    </tr>
+                </thead>
+                <tbody id="listData">
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- Modal -->
@@ -82,56 +58,30 @@
         $(document).ready(function() {
             getData()
         })
-        var data_karyawan = ''
         var data_kalender = ''
 
         function getData() {
             $.ajax({
-                url: '<?php echo base_url(); ?>direktur/laporanTHR/dataKalender',
-                type: 'GET',
+                url: '<?php echo base_url(); ?>pegawai/dataTHR/dataKalender',
+                type: 'POST',
                 beforeSend: function() {},
                 success: function(response) {
                     data_kalender = JSON.parse(response)
                     var html = ''
-                    html += '<option value="" selected disabled>--Pilih Tanggal THR--</option>'
-                    $.each(data_kalender, function(key, value) {
-                        html += '<option value="' + value.tanggal_thr + '">' + value.tanggal_thr + '</option>'
-                    })
-                    $('#tgl_thr').html(html)
-                }
-            })
-        }
-
-        function tampilData() {
-            var tgl_thr = $('#tgl_thr').val()
-            $.ajax({
-                url: '<?php echo base_url(); ?>direktur/laporanTHR/dataKaryawan',
-                type: 'POST',
-                data: {
-                    tgl_thr: tgl_thr,
-                },
-                beforeSend: function() {},
-                success: function(response) {
-                    data_karyawan = JSON.parse(response)
-                    var html = ''
-                    $.each(data_karyawan.masaKaryawan, function(key, value) {
+                    $.each(data_kalender.kalender, function(key, value) {
+                        var hasil = data_kalender.seleksi.filter((values, keys) => {
+                            if (values.id_kalender_thr_pk == value.id) return true
+                        })
                         html += '<tr>'
                         html += '<td>' + (parseInt(key) + 1) + '</td>'
-                        html += '<td>' + value.nip + '</td>'
-                        html += '<td>' + value.nama_pegawai + '</td>'
-                        html += '<td>' + value.tgl_masuk + '</td>'
-                        html += '<td>' + value.tgl_thr + '</td>'
-                        html += '<td>' + value.masa_kerja + '</td>'
-                        html += '<td>' + number_format(value.gaji_pokok) + '</td>'
+                        html += '<td>' + value.tanggal_thr + '</td>'
                         html += '<td>'
-                        if (value.masa_kerja_bulan >= 12) {
-                            html += number_format(value.gaji_pokok)
+                        if (hasil.length > 0) {
+                            html += '<button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + value.tanggal_thr + "'" + ')"><i class="fa fa-print"></i></button>'
                         } else {
-                            var total = (parseInt(value.masa_kerja_bulan) / 12) * value.gaji_pokok
-                            html += number_format(total)
+                            html += '<i>Belum Realisasi</i>'
                         }
-                        html == '</td>'
-                        html += '<td><button class="btn btn-sm btn-primary" onclick="cetakSlipTHRPerPerson(' + "'" + tgl_thr + "'" + ',' + "'" + value.nip + "'" + ')"><i class="fa fa-print"></i></button></td>'
+                        html += '</td>'
                         html += '</tr>'
                     })
                     $('#listData').html(html)
@@ -139,17 +89,8 @@
             })
         }
 
-        function cetakSlipTHRPerPerson(tgl_thr, nip) {
-            var url = '<?= base_url() ?>direktur/laporanTHR/slipTHRPerPerson/' + tgl_thr + '/' + nip
-            window.open(url, '_blank')
-        }
-        $(document).on('click', '#btnCetak', function(e) {
-            var tgl_thr = $('#tgl_thr').val()
-            cetakSlipTHR(tgl_thr)
-        })
-
-        function cetakSlipTHR(tgl_thr) {
-            var url = '<?= base_url() ?>direktur/laporanTHR/slipTHR/' + tgl_thr
+        function cetakSlipTHRPerPerson(tgl_thr) {
+            var url = '<?= base_url() ?>pegawai/dataTHR/slipTHRPerPerson/' + tgl_thr
             window.open(url, '_blank')
         }
     </script>
