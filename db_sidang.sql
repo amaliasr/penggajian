@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2023 at 04:22 PM
+-- Generation Time: Mar 20, 2023 at 02:26 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -85,29 +85,30 @@ CREATE TABLE `data_jabatan` (
   `nama_jabatan` varchar(100) NOT NULL,
   `gaji_pokok` bigint(20) NOT NULL,
   `transport` bigint(20) NOT NULL,
-  `uang_makan` bigint(20) NOT NULL
+  `uang_makan` bigint(20) NOT NULL,
+  `id_pph_pk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `data_jabatan`
 --
 
-INSERT INTO `data_jabatan` (`id_jabatan`, `nama_jabatan`, `gaji_pokok`, `transport`, `uang_makan`) VALUES
-(2, 'Admin', 3500000, 200000, 300000),
-(3, 'HR External Staff', 2500000, 200000, 300000),
-(4, 'President Director', 5500000, 200000, 300000),
-(5, 'HR Internal Staff', 3700000, 200000, 300000),
-(6, 'Exim Staff', 3200000, 200000, 300000),
-(7, 'PPIC & Logistic Manager', 4100000, 200000, 300000),
-(8, 'Operational Director', 5200000, 200000, 300000),
-(9, 'Quality Control Staff', 3120000, 200000, 300000),
-(10, 'Coordinator Shift', 4320000, 200000, 300000),
-(11, 'Purchasing Staff', 4330000, 200000, 300000),
-(12, 'Press Head', 4400000, 200000, 300000),
-(13, 'Sales & Marketing Staff', 3700000, 200000, 300000),
-(14, 'Export & Logistic Admin', 4530000, 200000, 300000),
-(15, 'Accounting & Finance Admin', 5320000, 200000, 300000),
-(16, 'Maintenance Operator', 4560000, 200000, 300000);
+INSERT INTO `data_jabatan` (`id_jabatan`, `nama_jabatan`, `gaji_pokok`, `transport`, `uang_makan`, `id_pph_pk`) VALUES
+(2, 'Admin', 3500000, 200000, 300000, NULL),
+(3, 'HR External Staff', 2500000, 200000, 300000, NULL),
+(4, 'President Director', 5500000, 200000, 300000, NULL),
+(5, 'HR Internal Staff', 3700000, 200000, 300000, NULL),
+(6, 'Exim Staff', 3200000, 200000, 300000, NULL),
+(7, 'PPIC & Logistic Manager', 4100000, 200000, 300000, NULL),
+(8, 'Operational Director', 5200000, 200000, 300000, NULL),
+(9, 'Quality Control Staff', 3120000, 200000, 300000, NULL),
+(10, 'Coordinator Shift', 4320000, 200000, 300000, NULL),
+(11, 'Purchasing Staff', 4330000, 200000, 300000, NULL),
+(12, 'Press Head', 4400000, 200000, 300000, NULL),
+(13, 'Sales & Marketing Staff', 3700000, 200000, 300000, NULL),
+(14, 'Export & Logistic Admin', 4530000, 200000, 300000, NULL),
+(15, 'Accounting & Finance Admin', 5320000, 200000, 300000, NULL),
+(16, 'Maintenance Operator', 4560000, 200000, 300000, NULL);
 
 -- --------------------------------------------------------
 
@@ -162,7 +163,23 @@ INSERT INTO `data_kehadiran` (`id_kehadiran`, `bulan`, `nip`, `hadir`, `izin`, `
 (29, '012023', 1791209830491802, 25, 0, 0, 0, 8),
 (30, '012023', 17912098304928114, 25, 0, 0, 0, 10),
 (31, '012023', 1791209830491805, 24, 0, 0, 0, 6),
-(32, '012023', 17912098304918011, 25, 0, 0, 0, 6);
+(32, '012023', 17912098304918011, 25, 0, 0, 0, 6),
+(33, '032023', 1791209830492812, 25, 0, 0, 0, 9),
+(34, '032023', 1791209830491806, 22, 1, 2, 0, 3),
+(35, '032023', 1791209830491807, 25, 0, 0, 0, 2),
+(36, '032023', 1791209830491809, 25, 0, 0, 0, 16),
+(37, '032023', 17912098304918010, 25, 0, 0, 0, 12),
+(38, '032023', 1791209830491808, 25, 0, 0, 0, 13),
+(39, '032023', 1791209830491801, 25, 0, 0, 0, 4),
+(40, '032023', 17912098304928116, 25, 0, 0, 0, 3),
+(41, '032023', 17912098304928113, 25, 0, 0, 0, 3),
+(42, '032023', 1791209830491912, 25, 0, 0, 0, 10),
+(43, '032023', 17912098304928115, 25, 0, 0, 0, 10),
+(44, '032023', 17912098304918012, 25, 0, 0, 0, 11),
+(45, '032023', 1791209830491802, 25, 0, 0, 0, 8),
+(46, '032023', 17912098304928114, 25, 0, 0, 0, 10),
+(47, '032023', 1791209830491805, 25, 0, 0, 0, 6),
+(48, '032023', 17912098304918011, 25, 0, 0, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -185,30 +202,55 @@ CREATE TABLE `data_pegawai` (
   `status` varchar(20) NOT NULL,
   `photo` varchar(200) NOT NULL,
   `id_akses` int(11) DEFAULT NULL,
-  `status_keaktifan` varchar(20) NOT NULL
+  `status_keaktifan` varchar(20) NOT NULL,
+  `id_lokasi_kerja_pk` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `data_pegawai`
 --
 
-INSERT INTO `data_pegawai` (`nip`, `nama_pegawai`, `nik`, `username`, `password`, `id_jabatan`, `jenis_kelamin`, `alamat`, `no_telp`, `email`, `tgl_masuk`, `status`, `photo`, `id_akses`, `status_keaktifan`) VALUES
-(1791209830491801, 'Hendry Djahja', 3103846890002394, 'hendry', '81dc9bdb52d04dc20036dbd8313ed055', 4, 'Laki-Laki', 'Jl. KH Agus Salim 16, Sabang, Menteng Jakarta Pusat', 81274857362, 'hendrydjahja@gmail.com', '2012-02-06', 'Pegawai Tetap', 'boy7.png', 3, 'Aktif'),
-(1791209830491802, 'Richard Djahja', 3302846820002197, 'richard', '81dc9bdb52d04dc20036dbd8313ed055', 8, 'Laki-Laki', 'JL. Tebet Raya No. 84, Tebet, Jakarta Selatan', 81222691988, 'richarddjahja@gmail.com', '2012-02-01', 'Pegawai Tetap', 'boy8.png', 2, 'Aktif'),
-(1791209830491805, 'Yana', 3321846230002213, 'yana', '81dc9bdb52d04dc20036dbd8313ed055', 6, 'Laki-Laki', 'Jl. Metro Pondok Indah Kav. IV, Kebayoran Lama, Jakarta Selatan', 81245760990, 'yana@gmail.com', '2023-02-06', 'Pegawai Tetap', 'boy32.png', 2, 'Aktif'),
-(1791209830491806, 'Dijah', 3318246420002237, 'dijah', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Perempuan', 'Jl. Setiabudi Tengah No. 3, Jakarta Selatan 12910', 81260217971, 'dijah@gmail.com', '2023-02-05', 'Pegawai Tetap', 'boy21.png', 2, 'Aktif'),
-(1791209830491807, 'Dwitya', 3662442312000091, 'dwitya', '81dc9bdb52d04dc20036dbd8313ed055', 2, 'Perempuan', 'Jalan Gunung Sahari 11 Kecil Nomor 22,RT 3 RW 3, Jakarta ', 81282388488, 'dwitya@gmail.com', '2016-01-01', 'Pegawai Tetap', 'girl12.jpeg', 1, 'Aktif'),
-(1791209830491808, 'Havita Safitri', 3954818850002169, 'havita', '81dc9bdb52d04dc20036dbd8313ed055', 13, 'Perempuan', 'Jalan Bonang No. 19. RT 2/RW 5 Menteng, Jakarta Pusat', 81285539295, 'havitaf@gmail.com', '2017-01-01', 'Pegawai Tetap', 'girl121.jpeg', 2, 'Aktif'),
-(1791209830491809, 'Fadlan', 3132892820002168, 'fadlan', '81dc9bdb52d04dc20036dbd8313ed055', 16, 'Laki-Laki', 'Jl. Seulawah Raya no. B-3, Kompleks TNI AU Waringin Permai, Jatiwaringin, Kelurahan Cipinang Melayu, Kecamatan Makasar, Jakarta Timur 13620', 81285550385, 'fadlan1@gmail.com', '2019-01-28', 'Pegawai Tetap', 'boy33.png', 2, 'Aktif'),
-(1791209830491912, 'Murdoko', 6702656820002218, 'murdoko', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Jl Pramuka Sari 5 no 7, Rawasari, Cempaka Putih, Jakarta Pusat. Belakang Hotel Sentral', 82292245433, 'murd0k0@gmail.com', '2023-01-31', 'Pegawai Tetap', 'boy35.png', 2, 'Aktif'),
-(1791209830492812, 'Arif B.', 3103846890002394, 'arif', '81dc9bdb52d04dc20036dbd8313ed055', 9, 'Laki-Laki', 'Jln. Raden Saleh Raya no 37 Cikini Jakarta Pusat ', 82311884417, 'arifb2@gmail.com', '2017-01-31', 'Pegawai Tetap', 'boy42.png', 2, 'Aktif'),
-(17912098304918010, 'Haryono', 3321473950002449, 'haryono', '81dc9bdb52d04dc20036dbd8313ed055', 12, 'Laki-Laki', 'Jl. Kemuning Raya No. 1 RT/RW 012/02 Utan Kayu Utara, Kec. Matraman – Jakarta Timur', 81297145562, 'hary08@gmail.com', '2019-12-02', 'Pegawai Tetap', 'boy41.png', 2, 'Aktif'),
-(17912098304918011, 'Yulia', 3213849360002420, 'yulia', '81dc9bdb52d04dc20036dbd8313ed055', 6, 'Perempuan', 'Jalan Pulo Raya V No.14, Kebayoran Baru, Jakarta Selatan 12170 (Belakang Kantor Walikota Jakarta Selatan)', 81355255781, 'yulia02@gmail.com', '2011-02-07', 'Pegawai Tetap', 'girl4.jpeg', 2, 'Aktif'),
-(17912098304918012, 'Riana', 3127493857460234, 'riana', '81dc9bdb52d04dc20036dbd8313ed055', 11, 'Perempuan', 'Jl. Martapura III No. 4 dan No 8, Kebon Melati, Tanah Abang, Jakarta Pusat 10230', 82259710745, 'r1ana@gmail.com', '2017-02-01', 'Pegawai Tetap', 'girl31.jpeg', 2, 'Aktif'),
-(17912098304928113, 'Lasma Pardosi', 6948576689000391, 'lasma', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Perempuan', 'Jl. Kramat Jaya Baru 3 No. 14 RW/RT: 01/15 Kel/Kec: Johar Baru – Jakarta Pusat', 82312446655, 'lasma.pardosi@gloryoffset.com', '2017-02-14', 'Pegawai Tetap', 'girl5.jpeg', 1, 'Aktif'),
-(17912098304928114, 'Syafrudin', 6384028490002394, 'syafrudin', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Green Garden Blok B13 No.27 Kel. Rorotan Kec. Cilincing Jakarta Utara', 85227777728, 'syafrudin@gmail.com', '2016-02-17', 'Pegawai Tetap', 'boy36.png', 2, 'Aktif'),
-(17912098304928115, 'Nuroso', 6503843850002394, 'nuroso', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Jl. Gunung Sahari XI No. 24 RT 3/3, Jakarta Pusat (Belakang BNI 46)', 83841212099, 'nuroso@gmail.com', '2019-01-15', 'Pegawai Tetap', 'boy43.png', 2, 'Aktif'),
-(17912098304928116, 'Kevin Hansdinata', 1234567890987650, 'kevin', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Laki-Laki', 'UBM', 81348212340, 'kevin@gmail.com', '2023-01-01', 'Pegawai Tetap', 'boy9.png', 2, 'Aktif');
+INSERT INTO `data_pegawai` (`nip`, `nama_pegawai`, `nik`, `username`, `password`, `id_jabatan`, `jenis_kelamin`, `alamat`, `no_telp`, `email`, `tgl_masuk`, `status`, `photo`, `id_akses`, `status_keaktifan`, `id_lokasi_kerja_pk`) VALUES
+(1791209830491801, 'Hendry Djahja', 3103846890002394, 'hendry', '81dc9bdb52d04dc20036dbd8313ed055', 4, 'Laki-Laki', 'Jl. KH Agus Salim 16, Sabang, Menteng Jakarta Pusat', 81274857362, 'hendrydjahja@gmail.com', '2012-02-06', 'Pegawai Tetap', 'boy7.png', 3, 'Aktif', 1),
+(1791209830491802, 'Richard Djahja', 3302846820002197, 'richard', '81dc9bdb52d04dc20036dbd8313ed055', 8, 'Laki-Laki', 'JL. Tebet Raya No. 84, Tebet, Jakarta Selatan', 81222691988, 'richarddjahja@gmail.com', '2012-02-01', 'Pegawai Tetap', 'boy8.png', 2, 'Aktif', 1),
+(1791209830491805, 'Yana', 3321846230002213, 'yana', '81dc9bdb52d04dc20036dbd8313ed055', 6, 'Laki-Laki', 'Jl. Metro Pondok Indah Kav. IV, Kebayoran Lama, Jakarta Selatan', 81245760990, 'yana@gmail.com', '2023-02-06', 'Pegawai Tetap', 'boy32.png', 2, 'Aktif', 1),
+(1791209830491806, 'Dijah', 3318246420002237, 'dijah', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Perempuan', 'Jl. Setiabudi Tengah No. 3, Jakarta Selatan 12910', 81260217971, 'dijah@gmail.com', '2023-02-05', 'Pegawai Tetap', 'boy21.png', 2, 'Aktif', 1),
+(1791209830491807, 'Dwitya', 3662442312000091, 'dwitya', '81dc9bdb52d04dc20036dbd8313ed055', 2, 'Perempuan', 'Jalan Gunung Sahari 11 Kecil Nomor 22,RT 3 RW 3, Jakarta ', 81282388488, 'dwitya@gmail.com', '2016-01-01', 'Pegawai Tetap', 'girl12.jpeg', 1, 'Aktif', 1),
+(1791209830491808, 'Havita Safitri', 3954818850002169, 'havita', '81dc9bdb52d04dc20036dbd8313ed055', 13, 'Perempuan', 'Jalan Bonang No. 19. RT 2/RW 5 Menteng, Jakarta Pusat', 81285539295, 'havitaf@gmail.com', '2017-01-01', 'Pegawai Tetap', 'girl121.jpeg', 2, 'Aktif', 1),
+(1791209830491809, 'Fadlan', 3132892820002168, 'fadlan', '81dc9bdb52d04dc20036dbd8313ed055', 16, 'Laki-Laki', 'Jl. Seulawah Raya no. B-3, Kompleks TNI AU Waringin Permai, Jatiwaringin, Kelurahan Cipinang Melayu, Kecamatan Makasar, Jakarta Timur 13620', 81285550385, 'fadlan1@gmail.com', '2019-01-28', 'Pegawai Tetap', 'boy33.png', 2, 'Aktif', 1),
+(1791209830491912, 'Murdoko', 6702656820002218, 'murdoko', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Jl Pramuka Sari 5 no 7, Rawasari, Cempaka Putih, Jakarta Pusat. Belakang Hotel Sentral', 82292245433, 'murd0k0@gmail.com', '2023-01-31', 'Pegawai Tetap', 'boy35.png', 2, 'Aktif', 1),
+(1791209830492812, 'Arif B.', 3103846890002394, 'arif', '81dc9bdb52d04dc20036dbd8313ed055', 9, 'Laki-Laki', 'Jln. Raden Saleh Raya no 37 Cikini Jakarta Pusat ', 82311884417, 'arifb2@gmail.com', '2017-01-31', 'Pegawai Tetap', 'boy42.png', 2, 'Aktif', 1),
+(17912098304918010, 'Haryono', 3321473950002449, 'haryono', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Jl. Kemuning Raya No. 1 RT/RW 012/02 Utan Kayu Utara, Kec. Matraman – Jakarta Timur', 81297145562, 'hary08@gmail.com', '2019-12-02', 'Pegawai Tetap', 'boy41.png', 2, 'Aktif', 1),
+(17912098304918011, 'Yulia', 3213849360002420, 'yulia', '81dc9bdb52d04dc20036dbd8313ed055', 6, 'Perempuan', 'Jalan Pulo Raya V No.14, Kebayoran Baru, Jakarta Selatan 12170 (Belakang Kantor Walikota Jakarta Selatan)', 81355255781, 'yulia02@gmail.com', '2011-02-07', 'Pegawai Tetap', 'girl4.jpeg', 2, 'Aktif', 2),
+(17912098304918012, 'Riana', 3127493857460234, 'riana', '81dc9bdb52d04dc20036dbd8313ed055', 11, 'Perempuan', 'Jl. Martapura III No. 4 dan No 8, Kebon Melati, Tanah Abang, Jakarta Pusat 10230', 82259710745, 'r1ana@gmail.com', '2017-02-01', 'Pegawai Tetap', 'girl31.jpeg', 2, 'Aktif', 1),
+(17912098304928113, 'Lasma Pardosi', 6948576689000391, 'lasma', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Perempuan', 'Jl. Kramat Jaya Baru 3 No. 14 RW/RT: 01/15 Kel/Kec: Johar Baru – Jakarta Pusat', 82312446655, 'lasma.pardosi@gloryoffset.com', '2017-02-14', 'Pegawai Tetap', 'girl5.jpeg', 1, 'Aktif', 1),
+(17912098304928114, 'Syafrudin', 6384028490002394, 'syafrudin', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Green Garden Blok B13 No.27 Kel. Rorotan Kec. Cilincing Jakarta Utara', 85227777728, 'syafrudin@gmail.com', '2016-02-17', 'Pegawai Tetap', 'boy36.png', 2, 'Aktif', 1),
+(17912098304928115, 'Nuroso', 6503843850002394, 'nuroso', '81dc9bdb52d04dc20036dbd8313ed055', 10, 'Laki-Laki', 'Jl. Gunung Sahari XI No. 24 RT 3/3, Jakarta Pusat (Belakang BNI 46)', 83841212099, 'nuroso@gmail.com', '2019-01-15', 'Pegawai Tetap', 'boy43.png', 2, 'Non Aktif', 1),
+(17912098304928116, 'Kevin Hansdinata', 1234567890987650, 'kevin', '81dc9bdb52d04dc20036dbd8313ed055', 3, 'Laki-Laki', 'UBM', 81348212340, 'kevin@gmail.com', '2023-01-01', 'Pegawai Tetap', 'boy9.png', 2, 'Aktif', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_pph`
+--
+
+CREATE TABLE `data_pph` (
+  `id` int(11) NOT NULL,
+  `batas_atas` bigint(20) NOT NULL,
+  `batas_bawah` bigint(20) NOT NULL,
+  `persen` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `data_pph`
+--
+
+INSERT INTO `data_pph` (`id`, `batas_atas`, `batas_bawah`, `persen`) VALUES
+(1, 0, 60000000, 5),
+(3, 60000000, 250000000, 15),
+(4, 250000000, 500000000, 25),
+(6, 500000000, 5000000000, 30),
+(7, 500000000, 9223372036854775807, 35);
 
 -- --------------------------------------------------------
 
@@ -229,6 +271,48 @@ INSERT INTO `hak_akses` (`id_akses`, `keterangan`) VALUES
 (1, 'admin'),
 (2, 'pegawai'),
 (3, 'manager');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kalender_thr`
+--
+
+CREATE TABLE `kalender_thr` (
+  `id` int(11) NOT NULL,
+  `tanggal_thr` date NOT NULL,
+  `bulan_thr` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kalender_thr`
+--
+
+INSERT INTO `kalender_thr` (`id`, `tanggal_thr`, `bulan_thr`) VALUES
+(1, '2023-03-16', '032023'),
+(3, '2023-03-23', '032023');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lokasi_kerja`
+--
+
+CREATE TABLE `lokasi_kerja` (
+  `id` int(11) NOT NULL,
+  `nama_lokasi` varchar(255) NOT NULL,
+  `alamat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lokasi_kerja`
+--
+
+INSERT INTO `lokasi_kerja` (`id`, `nama_lokasi`, `alamat`) VALUES
+(1, 'Jakarta', ''),
+(2, 'Malang', ''),
+(3, 'Medan', ''),
+(4, 'Surabaya', '');
 
 -- --------------------------------------------------------
 
@@ -271,6 +355,143 @@ CREATE TABLE `relation_cuti_potongan` (
 INSERT INTO `relation_cuti_potongan` (`id`, `id_cuti`, `col_jabatan`) VALUES
 (1, 1, 'uang_makan');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_mutasi`
+--
+
+CREATE TABLE `riwayat_mutasi` (
+  `id` int(11) NOT NULL,
+  `nip_pk` bigint(22) NOT NULL,
+  `id_jabatan_new_pk` int(11) NOT NULL,
+  `id_jabatan_recent_pk` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_lokasi_kerja_new_pk` int(11) NOT NULL,
+  `id_lokasi_kerja_recent_pk` int(11) NOT NULL,
+  `alasan_mutasi` text NOT NULL,
+  `bulan` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_mutasi`
+--
+
+INSERT INTO `riwayat_mutasi` (`id`, `nip_pk`, `id_jabatan_new_pk`, `id_jabatan_recent_pk`, `tanggal`, `id_lokasi_kerja_new_pk`, `id_lokasi_kerja_recent_pk`, `alasan_mutasi`, `bulan`, `status`) VALUES
+(1, 17912098304918012, 11, 11, '2023-03-11', 2, 2, 'Ditempatkan dekat dengan rumah', '032023', 'PENDING'),
+(4, 17912098304918011, 6, 6, '2023-03-11', 2, 1, 'dekat dengan rumah', '032023', 'SUCCESS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_phk`
+--
+
+CREATE TABLE `riwayat_phk` (
+  `id` int(11) NOT NULL,
+  `nip_pk` bigint(22) NOT NULL,
+  `tanggal` date NOT NULL,
+  `alasan_phk` text NOT NULL,
+  `bulan` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_phk`
+--
+
+INSERT INTO `riwayat_phk` (`id`, `nip_pk`, `tanggal`, `alasan_phk`, `bulan`, `status`) VALUES
+(1, 17912098304928115, '2023-03-11', 'Kinerja tidak bagus', '032023', 'SUCCESS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_promosi`
+--
+
+CREATE TABLE `riwayat_promosi` (
+  `id` int(11) NOT NULL,
+  `nip_pk` bigint(22) NOT NULL,
+  `id_jabatan_new_pk` int(11) NOT NULL,
+  `id_jabatan_recent_pk` int(11) NOT NULL,
+  `alasan_promosi` text NOT NULL,
+  `tanggal` date NOT NULL,
+  `bulan` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `keterangan` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_promosi`
+--
+
+INSERT INTO `riwayat_promosi` (`id`, `nip_pk`, `id_jabatan_new_pk`, `id_jabatan_recent_pk`, `alasan_promosi`, `tanggal`, `bulan`, `status`, `keterangan`) VALUES
+(1, 17912098304918010, 10, 12, 'Kinerjanya bagus, harus di naikkan', '2023-03-11', '032023', 'SUCCESS', 'PROMOSI');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_sia`
+--
+
+CREATE TABLE `riwayat_sia` (
+  `id` int(11) NOT NULL,
+  `nip_pk` bigint(22) NOT NULL,
+  `jenis_sia` varchar(20) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `tanggal_awal` date NOT NULL,
+  `tanggal_akhir` date NOT NULL,
+  `tanggal_pengajuan` date NOT NULL,
+  `bulan` varchar(20) NOT NULL,
+  `jumlah_hari` int(11) NOT NULL,
+  `id_potongan_gaji_pk` int(11) DEFAULT NULL,
+  `id_jabatan_pk` int(11) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_sia`
+--
+
+INSERT INTO `riwayat_sia` (`id`, `nip_pk`, `jenis_sia`, `status`, `tanggal_awal`, `tanggal_akhir`, `tanggal_pengajuan`, `bulan`, `jumlah_hari`, `id_potongan_gaji_pk`, `id_jabatan_pk`, `keterangan`) VALUES
+(1, 1791209830491806, 'IJIN', 'SUCCESS', '2023-03-09', '2023-03-09', '2023-03-09', '032023', 1, NULL, 3, 'ijin ke Surabaya'),
+(2, 1791209830491806, 'SAKIT', 'SUCCESS', '2023-03-07', '2023-03-08', '2023-03-09', '032023', 2, NULL, 3, 'sakit perut');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_thr`
+--
+
+CREATE TABLE `riwayat_thr` (
+  `id` int(11) NOT NULL,
+  `id_kalender_thr_pk` int(11) NOT NULL,
+  `nip_pk` bigint(22) NOT NULL,
+  `nominal` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_thr`
+--
+
+INSERT INTO `riwayat_thr` (`id`, `id_kalender_thr_pk`, `nip_pk`, `nominal`) VALUES
+(1, 1, 1791209830491801, 5500000),
+(2, 1, 1791209830491802, 5200000),
+(3, 1, 1791209830491805, 266667),
+(4, 1, 1791209830491806, 208333),
+(5, 1, 1791209830491807, 3500000),
+(6, 1, 1791209830491808, 3700000),
+(7, 1, 1791209830491809, 4560000),
+(8, 1, 1791209830491912, 720000),
+(9, 1, 1791209830492812, 3120000),
+(10, 1, 17912098304918010, 4320000),
+(11, 1, 17912098304918011, 3200000),
+(12, 1, 17912098304918012, 4330000),
+(13, 1, 17912098304928113, 2500000),
+(14, 1, 17912098304928114, 4320000),
+(15, 1, 17912098304928116, 416667);
+
 --
 -- Indexes for dumped tables
 --
@@ -294,7 +515,8 @@ ALTER TABLE `data_cuti`
 -- Indexes for table `data_jabatan`
 --
 ALTER TABLE `data_jabatan`
-  ADD PRIMARY KEY (`id_jabatan`);
+  ADD PRIMARY KEY (`id_jabatan`),
+  ADD KEY `id_pph` (`id_pph_pk`);
 
 --
 -- Indexes for table `data_kehadiran`
@@ -309,13 +531,32 @@ ALTER TABLE `data_kehadiran`
 ALTER TABLE `data_pegawai`
   ADD PRIMARY KEY (`nip`),
   ADD KEY `id_jabatan` (`id_jabatan`),
-  ADD KEY `id_akses` (`id_akses`);
+  ADD KEY `id_akses` (`id_akses`),
+  ADD KEY `id_lokasi_kerja` (`id_lokasi_kerja_pk`);
+
+--
+-- Indexes for table `data_pph`
+--
+ALTER TABLE `data_pph`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `hak_akses`
 --
 ALTER TABLE `hak_akses`
   ADD PRIMARY KEY (`id_akses`);
+
+--
+-- Indexes for table `kalender_thr`
+--
+ALTER TABLE `kalender_thr`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `lokasi_kerja`
+--
+ALTER TABLE `lokasi_kerja`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `potongan_gaji`
@@ -329,6 +570,50 @@ ALTER TABLE `potongan_gaji`
 ALTER TABLE `relation_cuti_potongan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_cuti` (`id_cuti`);
+
+--
+-- Indexes for table `riwayat_mutasi`
+--
+ALTER TABLE `riwayat_mutasi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nip` (`nip_pk`),
+  ADD KEY `id_jabatan_new` (`id_jabatan_new_pk`),
+  ADD KEY `id_jabatan_recent` (`id_jabatan_recent_pk`),
+  ADD KEY `id_lokasi_kerja_new` (`id_lokasi_kerja_new_pk`),
+  ADD KEY `id_lokasi_kerja_recent` (`id_lokasi_kerja_recent_pk`);
+
+--
+-- Indexes for table `riwayat_phk`
+--
+ALTER TABLE `riwayat_phk`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nip` (`nip_pk`);
+
+--
+-- Indexes for table `riwayat_promosi`
+--
+ALTER TABLE `riwayat_promosi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nip` (`nip_pk`),
+  ADD KEY `id_jabatan_new` (`id_jabatan_new_pk`),
+  ADD KEY `id_jabatan_recent` (`id_jabatan_recent_pk`);
+
+--
+-- Indexes for table `riwayat_sia`
+--
+ALTER TABLE `riwayat_sia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nip` (`nip_pk`),
+  ADD KEY `id_potongan_gaji` (`id_potongan_gaji_pk`),
+  ADD KEY `id_jabatan_pk` (`id_jabatan_pk`);
+
+--
+-- Indexes for table `riwayat_thr`
+--
+ALTER TABLE `riwayat_thr`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_kalender_thr` (`id_kalender_thr_pk`),
+  ADD KEY `nip` (`nip_pk`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -356,13 +641,31 @@ ALTER TABLE `data_jabatan`
 -- AUTO_INCREMENT for table `data_kehadiran`
 --
 ALTER TABLE `data_kehadiran`
-  MODIFY `id_kehadiran` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_kehadiran` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `data_pph`
+--
+ALTER TABLE `data_pph`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `hak_akses`
 --
 ALTER TABLE `hak_akses`
   MODIFY `id_akses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `kalender_thr`
+--
+ALTER TABLE `kalender_thr`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `lokasi_kerja`
+--
+ALTER TABLE `lokasi_kerja`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `potongan_gaji`
@@ -377,6 +680,36 @@ ALTER TABLE `relation_cuti_potongan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `riwayat_mutasi`
+--
+ALTER TABLE `riwayat_mutasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `riwayat_phk`
+--
+ALTER TABLE `riwayat_phk`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `riwayat_promosi`
+--
+ALTER TABLE `riwayat_promosi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `riwayat_sia`
+--
+ALTER TABLE `riwayat_sia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `riwayat_thr`
+--
+ALTER TABLE `riwayat_thr`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -387,6 +720,12 @@ ALTER TABLE `data_cuti`
   ADD CONSTRAINT `data_cuti_ibfk_1` FOREIGN KEY (`id_cuti`) REFERENCES `cuti` (`id`),
   ADD CONSTRAINT `data_cuti_ibfk_2` FOREIGN KEY (`nip`) REFERENCES `data_pegawai` (`nip`),
   ADD CONSTRAINT `data_cuti_ibfk_3` FOREIGN KEY (`nip_atasan`) REFERENCES `data_pegawai` (`nip`);
+
+--
+-- Constraints for table `data_jabatan`
+--
+ALTER TABLE `data_jabatan`
+  ADD CONSTRAINT `data_jabatan_ibfk_1` FOREIGN KEY (`id_pph_pk`) REFERENCES `data_pph` (`id`);
 
 --
 -- Constraints for table `data_kehadiran`
@@ -406,6 +745,44 @@ ALTER TABLE `data_pegawai`
 --
 ALTER TABLE `relation_cuti_potongan`
   ADD CONSTRAINT `relation_cuti_potongan_ibfk_1` FOREIGN KEY (`id_cuti`) REFERENCES `cuti` (`id`);
+
+--
+-- Constraints for table `riwayat_mutasi`
+--
+ALTER TABLE `riwayat_mutasi`
+  ADD CONSTRAINT `riwayat_mutasi_ibfk_1` FOREIGN KEY (`nip_pk`) REFERENCES `data_pegawai` (`nip`),
+  ADD CONSTRAINT `riwayat_mutasi_ibfk_2` FOREIGN KEY (`id_jabatan_new_pk`) REFERENCES `data_jabatan` (`id_jabatan`),
+  ADD CONSTRAINT `riwayat_mutasi_ibfk_3` FOREIGN KEY (`id_jabatan_recent_pk`) REFERENCES `data_jabatan` (`id_jabatan`),
+  ADD CONSTRAINT `riwayat_mutasi_ibfk_4` FOREIGN KEY (`id_lokasi_kerja_new_pk`) REFERENCES `lokasi_kerja` (`id`),
+  ADD CONSTRAINT `riwayat_mutasi_ibfk_5` FOREIGN KEY (`id_lokasi_kerja_recent_pk`) REFERENCES `lokasi_kerja` (`id`);
+
+--
+-- Constraints for table `riwayat_phk`
+--
+ALTER TABLE `riwayat_phk`
+  ADD CONSTRAINT `riwayat_phk_ibfk_1` FOREIGN KEY (`nip_pk`) REFERENCES `data_pegawai` (`nip`);
+
+--
+-- Constraints for table `riwayat_promosi`
+--
+ALTER TABLE `riwayat_promosi`
+  ADD CONSTRAINT `riwayat_promosi_ibfk_1` FOREIGN KEY (`nip_pk`) REFERENCES `data_pegawai` (`nip`),
+  ADD CONSTRAINT `riwayat_promosi_ibfk_2` FOREIGN KEY (`id_jabatan_new_pk`) REFERENCES `data_jabatan` (`id_jabatan`),
+  ADD CONSTRAINT `riwayat_promosi_ibfk_3` FOREIGN KEY (`id_jabatan_recent_pk`) REFERENCES `data_jabatan` (`id_jabatan`);
+
+--
+-- Constraints for table `riwayat_sia`
+--
+ALTER TABLE `riwayat_sia`
+  ADD CONSTRAINT `riwayat_sia_ibfk_1` FOREIGN KEY (`nip_pk`) REFERENCES `data_pegawai` (`nip`),
+  ADD CONSTRAINT `riwayat_sia_ibfk_2` FOREIGN KEY (`id_potongan_gaji_pk`) REFERENCES `potongan_gaji` (`id_pot`);
+
+--
+-- Constraints for table `riwayat_thr`
+--
+ALTER TABLE `riwayat_thr`
+  ADD CONSTRAINT `riwayat_thr_ibfk_1` FOREIGN KEY (`id_kalender_thr_pk`) REFERENCES `kalender_thr` (`id`),
+  ADD CONSTRAINT `riwayat_thr_ibfk_2` FOREIGN KEY (`nip_pk`) REFERENCES `data_pegawai` (`nip`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
