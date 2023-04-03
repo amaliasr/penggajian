@@ -15,6 +15,7 @@ class LaporanPosisiKaryawan extends CI_Controller
     public function index()
     {
         $data['title'] = "Laporan Posisi Karyawan";
+        $data['karyawan'] = $this->penggajianModel->get_data('data_pegawai')->result();
         $this->load->view('templates_admin/header', $data);
         $this->load->view('templates_admin/sidebar');
         $this->load->view('admin/laporanPosisiKaryawan', $data);
@@ -24,32 +25,35 @@ class LaporanPosisiKaryawan extends CI_Controller
     {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $data = $this->penggajianModel->getDataPromosiDate($tanggal_awal, $tanggal_akhir);
+        $nip = $this->input->post('nip');
+        $data = $this->penggajianModel->getDataPromosiDate($tanggal_awal, $tanggal_akhir, $nip);
         echo json_encode($data);
     }
     public function dataMutasi()
     {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $data  = $this->penggajianModel->getDataMutasiDate($tanggal_awal, $tanggal_akhir);
+        $nip = $this->input->post('nip');
+        $data  = $this->penggajianModel->getDataMutasiDate($tanggal_awal, $tanggal_akhir, $nip);
         echo json_encode($data);
     }
     public function dataPHK()
     {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $data  = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir);
+        $nip = $this->input->post('nip');
+        $data  = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir, $nip);
         echo json_encode($data);
     }
-    public function cetakLaporan($kategori, $tanggal_awal, $tanggal_akhir)
+    public function cetakLaporan($kategori, $tanggal_awal, $tanggal_akhir, $nip)
     {
         $data['title'] = 'Cetak Laporan Posisi';
         if ($kategori == 'PROMOSI') {
-            $data['laporan'] = $this->penggajianModel->getDataPromosiDate($tanggal_awal, $tanggal_akhir);
+            $data['laporan'] = $this->penggajianModel->getDataPromosiDate($tanggal_awal, $tanggal_akhir, $nip);
         } else if ($kategori == 'MUTASI') {
-            $data['laporan'] = $this->penggajianModel->getDataMutasiDate($tanggal_awal, $tanggal_akhir);
+            $data['laporan'] = $this->penggajianModel->getDataMutasiDate($tanggal_awal, $tanggal_akhir, $nip);
         } else {
-            $data['laporan'] = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir);
+            $data['laporan'] = $this->penggajianModel->getDataPHKDate($tanggal_awal, $tanggal_akhir, $nip);
         }
         $data['kategori'] = $kategori;
         $data['tanggal_awal'] = $tanggal_awal;

@@ -20,6 +20,15 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
+                    <label for="statisticEmail2">Karyawan</label>
+                    <select class="form-control ml-3 mr-3" name="karyawan" id="karyawan">
+                        <option value="">Semua Pegawai</option>
+                        <?php foreach ($karyawan as $key => $value) { ?>
+                            <option value="<?= $value->nip ?>"><?= $value->nama_pegawai ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group mb-2">
                     <label for="statisticEmail2">Tanggal Awal</label>
                     <input type="date" name="" id="tanggal_awal" class="form-control ml-3 mr-3" value="<?= date('Y-m-d') ?>">
                 </div>
@@ -107,6 +116,7 @@
                 data: {
                     tanggal_awal: $('#tanggal_awal').val(),
                     tanggal_akhir: $('#tanggal_akhir').val(),
+                    nip: $('#karyawan').val(),
                 },
                 beforeSend: function() {},
                 success: function(response) {
@@ -226,11 +236,12 @@
             var kategori = $('#kategori').val()
             var tanggal_awal = $('#tanggal_awal').val()
             var tanggal_akhir = $('#tanggal_akhir').val()
-            cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir)
+            var nip = $('#karyawan').val()
+            cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir, nip)
         })
 
-        function cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir) {
-            var url = '<?= base_url() ?>admin/laporanPosisiKaryawan/cetakLaporan/' + kategori + '/' + tanggal_awal + '/' + tanggal_akhir
+        function cetakSlipTHR(kategori, tanggal_awal, tanggal_akhir, nip) {
+            var url = '<?= base_url() ?>admin/laporanPosisiKaryawan/cetakLaporan/' + kategori + '/' + tanggal_awal + '/' + tanggal_akhir + '/' + nip
             window.open(url, '_blank')
         }
     </script>

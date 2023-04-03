@@ -25,6 +25,11 @@ class DataKalenderTHR extends CI_Controller
         $data = $this->penggajianModel->get_data('kalender_thr')->result();
         echo json_encode($data);
     }
+    public function checkAvailableKalenderTHR()
+    {
+        $data = $this->penggajianModel->checkAvailableKalenderTHR($this->input->post('date'));
+        echo json_encode($data);
+    }
     public function hapusKalenderTHR()
     {
         $this->db->trans_start();

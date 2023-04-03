@@ -60,6 +60,16 @@
         return current_date;
     }
 
+    function formatDate(date) {
+        var d = new Date(date);
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var current_date = d.getFullYear() + '-' +
+            (month < 10 ? '0' : '') + month + '-' +
+            (day < 10 ? '0' : '') + day
+        return current_date;
+    }
+
     function datediff(first, second) {
         var day_start = new Date(first);
         var day_end = new Date(second);
@@ -114,8 +124,12 @@
         html_body += '<div class="col-12">'
         html_body += '<div class="form-group">'
         html_body += '<label for="inputTanggal" class="control-label">Tanggal THR</label>'
-        html_body += '<input type="date" name="inputTanggal" id="inputTanggal" class="form-control" required="required" value="' + tanggal_thr + '">'
+        html_body += '<input type="date" name="inputTanggal" id="inputTanggal" class="form-control" required="required" value="' + tanggal_thr + '" onchange="changeDate()">'
         html_body += '</div>'
+        html_body += '</div>'
+
+        html_body += '<div class="col-12">'
+        html_body += '<p id="textWarning" class="text-danger d-none"><small>*) Tahun pada tanggal yang terpilih sudah memiliki tanggal THR</small></p>'
         html_body += '</div>'
 
         html_body += '</div>'
@@ -124,12 +138,39 @@
         html_footer += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
         if (id != '') {
 
-            html_footer += '<button type="button" class="btn btn-primary" onclick="ubahKalenderTHR(' + id + ')">Simpan</button>'
+            html_footer += '<button type="button" class="btn btn-primary btnKalender" disabled onclick="ubahKalenderTHR(' + id + ')">Simpan</button>'
         } else {
-            html_footer += '<button type="button" class="btn btn-primary" onclick="tambahKalenderTHR()">Simpan</button>'
+            html_footer += '<button type="button" class="btn btn-primary btnKalender" disabled onclick="tambahKalenderTHR()">Simpan</button>'
 
         }
         $('#modalFooter').html(html_footer)
+    }
+
+    function changeDate() {
+        var date = formatDate($('#inputTanggal').val())
+        $.ajax({
+            url: '<?php echo base_url(); ?>admin/dataKalenderTHR/checkAvailableKalenderTHR',
+            type: 'POST',
+            data: {
+                date: date
+            },
+            beforeSend: function() {},
+            success: function(response) {
+                if (JSON.parse(response).length != 0) {
+                    var data = JSON.parse(response)
+                    if (data[0].jumlah > 0) {
+                        $('.btnKalender').attr('disabled')
+                        $('#textWarning').removeClass('d-none')
+                    } else {
+                        $('.btnKalender').removeAttr('disabled')
+                        $('#textWarning').addClass('d-none')
+                    }
+                } else {
+                    $('#textWarning').addClass('d-none')
+                    $('.btnKalender').attr('disabled')
+                }
+            }
+        })
     }
 
     function modalDelete(id, tanggal) {
