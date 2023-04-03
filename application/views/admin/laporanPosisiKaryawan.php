@@ -20,7 +20,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <label for="statisticEmail2">Karyawan</label>
+                    <label for="statisticEmail2">Pegawai</label>
                     <select class="form-control ml-3 mr-3" name="karyawan" id="karyawan">
                         <option value="">Semua Pegawai</option>
                         <?php foreach ($karyawan as $key => $value) { ?>
